@@ -1134,6 +1134,293 @@ seek.addEventListener(
                 100
             ) * video.duration;
 
+<script>
+
+/* =====================================================
+   FLIX VIDEO EDITOR - COMPLETE JAVASCRIPT
+===================================================== */
+
+const video = document.getElementById("video");
+const fileInput = document.getElementById("fileInput");
+const empty = document.getElementById("empty");
+const seek = document.getElementById("seek");
+const time = document.getElementById("time");
+const duration = document.getElementById("duration");
+const clip = document.getElementById("clip");
+const playButton = document.getElementById("playButton");
+const muteButton = document.getElementById("muteButton");
+const volume = document.getElementById("volume");
+
+const textInput = document.getElementById("textInput");
+const textLayer = document.getElementById("textLayer");
+
+const brightness = document.getElementById("brightness");
+const contrast = document.getElementById("contrast");
+const saturation = document.getElementById("saturation");
+const blur = document.getElementById("blur");
+
+const aspectRatio = document.getElementById("aspectRatio");
+
+const newButton = document.getElementById("newButton");
+const exportButton = document.getElementById("exportButton");
+
+const modal = document.getElementById("modal");
+const modalTitle = document.getElementById("modalTitle");
+const modalContent = document.getElementById("modalContent");
+const closeModal = document.getElementById("closeModal");
+
+let videoURL = null;
+let currentFile = null;
+
+
+/* =====================================================
+   TIME FORMAT
+===================================================== */
+
+function formatTime(seconds){
+
+    if(!isFinite(seconds)){
+        return "00:00";
+    }
+
+    const minutes =
+        Math.floor(seconds / 60);
+
+    const secondsPart =
+        Math.floor(seconds % 60);
+
+    return (
+        String(minutes).padStart(2,"0")
+        + ":" +
+        String(secondsPart).padStart(2,"0")
+    );
+}
+
+
+/* =====================================================
+   IMPORT VIDEO
+===================================================== */
+
+fileInput.addEventListener("change", function(){
+
+    const file = this.files[0];
+
+    if(!file){
+        return;
+    }
+
+    if(!file.type.startsWith("video/")){
+
+        alert("Please ek valid video file select karo.");
+
+        this.value = "";
+
+        return;
+    }
+
+    /* Purana object URL remove */
+    if(videoURL){
+
+        URL.revokeObjectURL(videoURL);
+
+        videoURL = null;
+    }
+
+    currentFile = file;
+
+    /* New object URL */
+    videoURL =
+        URL.createObjectURL(file);
+
+    /* Video reset */
+    video.pause();
+
+    video.removeAttribute("src");
+
+    video.load();
+
+    /* New video */
+    video.src = videoURL;
+
+    video.style.display = "block";
+
+    empty.style.display = "none";
+
+    /* Timeline */
+    clip.textContent =
+        "🎬 " + file.name;
+
+    /* Reset controls */
+    seek.value = 0;
+
+    time.textContent =
+        "00:00 / 00:00";
+
+    duration.textContent =
+        "00:00";
+
+    playButton.textContent =
+        "▶";
+
+    /* Load video */
+    video.load();
+
+});
+
+
+/* =====================================================
+   VIDEO METADATA
+===================================================== */
+
+video.addEventListener(
+    "loadedmetadata",
+    function(){
+
+        if(!isFinite(video.duration)){
+            return;
+        }
+
+        duration.textContent =
+            formatTime(video.duration);
+
+        time.textContent =
+            "00:00 / " +
+            formatTime(video.duration);
+
+        seek.value = 0;
+
+    }
+);
+
+
+/* =====================================================
+   VIDEO TIME UPDATE
+===================================================== */
+
+video.addEventListener(
+    "timeupdate",
+    function(){
+
+        if(video.duration){
+
+            seek.value =
+                (
+                    video.currentTime /
+                    video.duration
+                ) * 100;
+
+        }
+
+        time.textContent =
+            formatTime(video.currentTime)
+            + " / " +
+            formatTime(video.duration);
+
+    }
+);
+
+
+/* =====================================================
+   PLAY / PAUSE
+===================================================== */
+
+playButton.addEventListener(
+    "click",
+    function(){
+
+        if(!video.src){
+
+            alert(
+                "Pehle video import karo."
+            );
+
+            return;
+        }
+
+        if(video.paused){
+
+            video.play()
+            .then(function(){
+
+                playButton.textContent =
+                    "⏸";
+
+            })
+            .catch(function(error){
+
+                console.log(error);
+
+                alert(
+                    "Video play nahi ho paya."
+                );
+
+            });
+
+        }else{
+
+            video.pause();
+
+            playButton.textContent =
+                "▶";
+
+        }
+
+    }
+);
+
+
+video.addEventListener(
+    "play",
+    function(){
+
+        playButton.textContent =
+            "⏸";
+
+    }
+);
+
+
+video.addEventListener(
+    "pause",
+    function(){
+
+        playButton.textContent =
+            "▶";
+
+    }
+);
+
+
+video.addEventListener(
+    "ended",
+    function(){
+
+        playButton.textContent =
+            "▶";
+
+    }
+);
+
+
+/* =====================================================
+   SEEK
+===================================================== */
+
+seek.addEventListener(
+    "input",
+    function(){
+
+        if(!video.duration){
+            return;
+        }
+
+        video.currentTime =
+            (
+                Number(this.value) /
+                100
+            ) *
+            video.duration;
+
     }
 );
 
@@ -1178,12 +1465,19 @@ volume.addEventListener(
 
         }
 
+        if(video.volume === 0){
+
+            muteButton.textContent =
+                "🔇";
+
+        }
+
     }
 );
 
 
 /* =====================================================
-   FILTERS
+   VIDEO FILTERS
 ===================================================== */
 
 function applyFilters(){
@@ -1237,4 +1531,624 @@ aspectRatio.addEventListener(
     "change",
     function(){
 
-        if(this.value === "
+        if(this.value === "auto"){
+
+            video.style.aspectRatio =
+                "auto";
+
+        }else{
+
+            video.style.aspectRatio =
+                this.value;
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   TEXT OVERLAY
+===================================================== */
+
+textInput.addEventListener(
+    "input",
+    function(){
+
+        const text =
+            this.value.trim();
+
+        textLayer.textContent =
+            text;
+
+        if(text){
+
+            textLayer.style.display =
+                "block";
+
+        }else{
+
+            textLayer.style.display =
+                "none";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   NEW PROJECT
+===================================================== */
+
+newButton.addEventListener(
+    "click",
+    function(){
+
+        video.pause();
+
+        if(videoURL){
+
+            URL.revokeObjectURL(videoURL);
+
+            videoURL = null;
+
+        }
+
+        currentFile = null;
+
+        video.removeAttribute("src");
+
+        video.load();
+
+        video.style.display =
+            "none";
+
+        empty.style.display =
+            "block";
+
+        clip.textContent =
+            "🎬 No video imported";
+
+        seek.value = 0;
+
+        time.textContent =
+            "00:00 / 00:00";
+
+        duration.textContent =
+            "00:00";
+
+        playButton.textContent =
+            "▶";
+
+        textInput.value = "";
+
+        textLayer.textContent = "";
+
+        textLayer.style.display =
+            "none";
+
+        brightness.value = 100;
+        contrast.value = 100;
+        saturation.value = 100;
+        blur.value = 0;
+
+        applyFilters();
+
+        fileInput.value = "";
+
+    }
+);
+
+
+/* =====================================================
+   EXPORT
+===================================================== */
+
+exportButton.addEventListener(
+    "click",
+    async function(){
+
+        if(!video.src){
+
+            alert(
+                "Pehle video import karo."
+            );
+
+            return;
+        }
+
+        alert(
+            "Export browser ke MediaRecorder support par depend karta hai."
+        );
+
+        if(!video.captureStream){
+
+            alert(
+                "Is browser mein video export support nahi hai."
+            );
+
+            return;
+        }
+
+        try{
+
+            const stream =
+                video.captureStream();
+
+            const mimeTypes = [
+                "video/webm;codecs=vp9",
+                "video/webm;codecs=vp8",
+                "video/webm"
+            ];
+
+            let selectedType = "";
+
+            for(
+                const type of mimeTypes
+            ){
+
+                if(
+                    MediaRecorder.isTypeSupported(type)
+                ){
+
+                    selectedType = type;
+
+                    break;
+                }
+
+            }
+
+            if(!selectedType){
+
+                alert(
+                    "Browser WebM export support nahi karta."
+                );
+
+                return;
+            }
+
+            const recorder =
+                new MediaRecorder(
+                    stream,
+                    {
+                        mimeType:
+                            selectedType
+                    }
+                );
+
+            const chunks = [];
+
+            recorder.ondataavailable =
+                function(event){
+
+                    if(event.data.size > 0){
+
+                        chunks.push(
+                            event.data
+                        );
+
+                    }
+
+                };
+
+            recorder.onstop =
+                function(){
+
+                    const blob =
+                        new Blob(
+                            chunks,
+                            {
+                                type:
+                                    selectedType
+                            }
+                        );
+
+                    const url =
+                        URL.createObjectURL(blob);
+
+                    const link =
+                        document.createElement("a");
+
+                    link.href = url;
+
+                    link.download =
+                        "flix-video.webm";
+
+                    document.body.appendChild(link);
+
+                    link.click();
+
+                    link.remove();
+
+                    setTimeout(
+                        function(){
+
+                            URL.revokeObjectURL(url);
+
+                        },
+                        1000
+                    );
+
+                };
+
+            video.currentTime = 0;
+
+            await video.play();
+
+            recorder.start();
+
+            video.onended =
+                function(){
+
+                    if(
+                        recorder.state ===
+                        "recording"
+                    ){
+
+                        recorder.stop();
+
+                    }
+
+                };
+
+        }catch(error){
+
+            console.error(error);
+
+            alert(
+                "Export mein problem aayi."
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   SIDEBAR TOOLS
+===================================================== */
+
+document
+.querySelectorAll(".tool[data-feature]")
+.forEach(function(tool){
+
+    tool.addEventListener(
+        "click",
+        function(){
+
+            const feature =
+                this.dataset.feature;
+
+            openTool(
+                feature
+            );
+
+        }
+    );
+
+});
+
+
+/* =====================================================
+   MEDIA TOOL
+===================================================== */
+
+const mediaTool =
+    document.getElementById("mediaTool");
+
+if(mediaTool){
+
+    mediaTool.addEventListener(
+        "click",
+        function(){
+
+            fileInput.click();
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   TEXT TOOL
+===================================================== */
+
+const textTool =
+    document.getElementById("textTool");
+
+if(textTool){
+
+    textTool.addEventListener(
+        "click",
+        function(){
+
+            textInput.focus();
+
+            openTool("Text");
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   SPLIT TOOL
+===================================================== */
+
+const splitTool =
+    document.getElementById("splitTool");
+
+if(splitTool){
+
+    splitTool.addEventListener(
+        "click",
+        function(){
+
+            if(!video.duration){
+
+                alert(
+                    "Pehle video import karo."
+                );
+
+                return;
+            }
+
+            const percentage =
+                (
+                    video.currentTime /
+                    video.duration
+                ) * 100;
+
+            clip.style.width =
+                Math.max(
+                    5,
+                    percentage
+                ) + "%";
+
+            clip.textContent =
+                "✂ Split at " +
+                formatTime(
+                    video.currentTime
+                );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   AUTO ADJUST
+===================================================== */
+
+const autoAdjustTool =
+    document.getElementById(
+        "autoAdjustTool"
+    );
+
+if(autoAdjustTool){
+
+    autoAdjustTool.addEventListener(
+        "click",
+        function(){
+
+            brightness.value = 105;
+
+            contrast.value = 110;
+
+            saturation.value = 110;
+
+            blur.value = 0;
+
+            applyFilters();
+
+            alert(
+                "Auto Adjust applied."
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   HSL TOOL
+===================================================== */
+
+const hslTool =
+    document.getElementById("hslTool");
+
+if(hslTool){
+
+    hslTool.addEventListener(
+        "click",
+        function(){
+
+            openTool("HSL");
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   MODAL TOOL SYSTEM
+===================================================== */
+
+function openTool(name){
+
+    modalTitle.textContent =
+        name;
+
+    let content = "";
+
+    if(name === "AI Effect"){
+
+        content =
+            "<h3>✨ AI Effect</h3>" +
+            "<p>AI effects panel ready hai. " +
+            "Real AI processing ke liye AI API ki zarurat hogi.</p>";
+
+    }
+
+    else if(name === "Transition"){
+
+        content =
+            "<h3>🎬 Transitions</h3>" +
+            "<p>Fade, zoom aur slide transitions yahan add kiye ja sakte hain.</p>";
+
+    }
+
+    else if(name === "AI Speech"){
+
+        content =
+            "<h3>🗣 AI Speech</h3>" +
+            "<p>AI voice generation ke liye speech service connect karni hogi.</p>";
+
+    }
+
+    else if(name === "Voice Enhance"){
+
+        content =
+            "<h3>🎙 Voice Enhance</h3>" +
+            "<p>Voice enhancement tools ke liye audio processing engine required hai.</p>";
+
+    }
+
+    else if(name === "AI Enhance"){
+
+        content =
+            "<h3>✨ AI Enhance</h3>" +
+            "<p>Video enhancement ke liye AI processing required hai.</p>";
+
+    }
+
+    else if(name === "Auto Captions"){
+
+        content =
+            "<h3>💬 Auto Captions</h3>" +
+            "<p>Speech recognition se captions generate kiye ja sakte hain.</p>";
+
+    }
+
+    else if(name === "Theme"){
+
+        content =
+            "<h3>🎭 Themes</h3>" +
+            "<button onclick=\"applyTheme('cinematic')\">Cinematic</button> " +
+            "<button onclick=\"applyTheme('bright')\">Bright</button> " +
+            "<button onclick=\"applyTheme('cool')\">Cool</button>";
+
+    }
+
+    else if(name === "Stickers"){
+
+        content =
+            "<h3>⭐ Stickers</h3>" +
+            "<button onclick=\"addSticker('⭐')\">⭐</button> " +
+            "<button onclick=\"addSticker('🔥')\">🔥</button> " +
+            "<button onclick=\"addSticker('❤️')\">❤️</button> " +
+            "<button onclick=\"addSticker('🎮')\">🎮</button>";
+
+    }
+
+    else if(name === "Filters"){
+
+        content =
+            "<h3>🎨 Filters</h3>" +
+            "<button onclick=\"setFilter('normal')\">Normal</button> " +
+            "<button onclick=\"setFilter('cinema')\">Cinema</button> " +
+            "<button onclick=\"setFilter('vivid')\">Vivid</button> " +
+            "<button onclick=\"setFilter('mono')\">Mono</button>";
+
+    }
+
+    else if(name === "Thumbnail Maker"){
+
+        content =
+            "<h3>🖼 Thumbnail Maker</h3>" +
+            "<p>Video ka current frame thumbnail ke liye use kiya ja sakta hai.</p>" +
+            "<button onclick=\"captureThumbnail()\">Capture Frame</button>";
+
+    }
+
+    else if(name === "AI Photo Maker"){
+
+        content =
+            "<h3>🤖 AI Photo Maker</h3>" +
+            "<p>AI image generation ke liye external AI service connect karni hogi.</p>";
+
+    }
+
+    else if(name === "AI Video Maker"){
+
+        content =
+            "<h3>🎥 AI Video Maker</h3>" +
+            "<p>AI video generation ke liye external AI service required hai.</p>";
+
+    }
+
+    else if(name === "Text to Speech"){
+
+        content =
+            "<h3>🔊 Text to Speech</h3>" +
+            "<textarea id=\"ttsText\" " +
+            "style=\"width:100%;padding:10px;background:#191c24;color:white;border:1px solid #333;border-radius:7px;\" " +
+            "placeholder=\"Type text...\"></textarea>" +
+            "<button onclick=\"speakText()\">🔊 Speak</button>";
+
+    }
+
+    else if(name === "Speech to Text"){
+
+        content =
+            "<h3>🗣➡📝 Speech to Text</h3>" +
+            "<p>Browser speech recognition available hone par voice typing kaam karegi.</p>" +
+            "<button onclick=\"startSpeechRecognition()\">🎙 Start</button>";
+
+    }
+
+    else if(name === "Sound Effects"){
+
+        content =
+            "<h3>🔉 Sound Effects</h3>" +
+            "<p>Sound effect files ko project mein add karne ke liye audio import system connect kiya ja sakta hai.</p>";
+
+    }
+
+    else if(name === "Music"){
+
+        content =
+            "<h3>🎵 Music</h3>" +
+            "<p>Music track add karne ke liye audio file import system required hai.</p>";
+
+    }
+
+    else if(name === "Dubbing"){
+
+        content =
+            "<h3>🌍 Dubbing</h3>" +
+            "<p>Video dubbing ke liye speech generation aur audio mixing required hai.</p>";
+
+    }
+
+    else if(name === "Text to Music"){
+
+        content =
+            "<h3>📝➡🎵 Text to Music</h3>" +
+            "<p>AI music generation service connect karne par ye feature use kiya ja sakta hai.</p>";
+
+    }
+
+    else{
+
+        content =
+            "<p>" +
+            name +
+            " tool selected.</
