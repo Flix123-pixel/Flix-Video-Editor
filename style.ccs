@@ -5,7 +5,10 @@
     font-family:Arial,sans-serif;
 }
 
+html,
 body{
+    width:100%;
+    height:100%;
     background:#08090d;
     color:#fff;
     overflow:hidden;
@@ -13,18 +16,24 @@ body{
 
 button{
     border:0;
-    background:#1b1e27;
-    color:#fff;
+    border-radius:8px;
     padding:9px 13px;
-    border-radius:7px;
+    background:#20232d;
+    color:#fff;
     cursor:pointer;
+    font-size:14px;
 }
 
 button:hover{
-    background:#292d39;
+    background:#343846;
+}
+
+button:active{
+    transform:scale(.97);
 }
 
 .app{
+    width:100%;
     height:100vh;
     display:flex;
     flex-direction:column;
@@ -32,48 +41,55 @@ button:hover{
 
 .topbar{
     height:60px;
+    min-height:60px;
+    background:#11131a;
+    border-bottom:1px solid #292d38;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 18px;
-    background:#11131a;
-    border-bottom:1px solid #292d38;
+    padding:0 15px;
 }
 
 .logo{
-    color:#7068ff;
-    font-size:21px;
+    font-size:20px;
     font-weight:bold;
+    color:#756cff;
+    white-space:nowrap;
 }
 
 .logo span{
     color:#fff;
 }
 
-.project-name{
-    color:#a6a9b4;
-}
-
-.top-buttons{
+.top-buttons,
+.top-actions{
     display:flex;
     gap:7px;
 }
 
-.export{
+.import-btn{
+    background:#252936;
+}
+
+.export,
+.export-btn{
     background:#6c63ff;
 }
 
-.editor{
+.editor,
+.main{
     flex:1;
-    display:flex;
     min-height:0;
+    display:flex;
 }
 
 .left-panel{
     width:78px;
+    min-width:78px;
     background:#101218;
     border-right:1px solid #292d38;
     padding:8px;
+    overflow-y:auto;
 }
 
 .tool{
@@ -84,22 +100,34 @@ button:hover{
     flex-direction:column;
     align-items:center;
     gap:5px;
+    background:#181b23;
+    border-radius:8px;
+    cursor:pointer;
+    user-select:none;
 }
 
-.tool strong{
-    font-size:19px;
-}
-
-.tool span{
-    font-size:10px;
+.tool:hover{
+    background:#282c38;
 }
 
 .tool.active{
     background:#6c63ff;
 }
 
+.tool strong,
+.tool b{
+    font-size:16px;
+}
+
+.tool span,
+.tool small{
+    font-size:10px;
+    color:#b7bac5;
+}
+
 .media-panel{
     width:230px;
+    min-width:230px;
     background:#12141b;
     border-right:1px solid #292d38;
 }
@@ -130,20 +158,25 @@ button:hover{
     line-height:1.5;
 }
 
-.center{
+.center,
+.workspace{
     flex:1;
     min-width:0;
+    min-height:0;
     display:flex;
     flex-direction:column;
 }
 
-.preview-area{
+.preview-area,
+.preview{
     flex:1;
     min-height:0;
     display:flex;
     align-items:center;
     justify-content:center;
     background:#050609;
+    position:relative;
+    overflow:hidden;
 }
 
 .preview-container{
@@ -155,16 +188,21 @@ button:hover{
     position:relative;
 }
 
-#previewVideo{
+#previewVideo,
+.preview video{
     max-width:100%;
     max-height:100%;
     background:#000;
+    border-radius:4px;
+    display:none;
 }
 
-.empty-preview{
+.empty-preview,
+.empty{
     position:absolute;
     text-align:center;
     color:#777c89;
+    pointer-events:none;
 }
 
 .empty-preview div{
@@ -172,22 +210,35 @@ button:hover{
     margin-bottom:10px;
 }
 
-.empty-preview h2{
+.empty-preview h2,
+.empty h2{
     color:#bfc2cc;
     margin-bottom:6px;
 }
 
-.text-overlay{
+.empty-preview p,
+.empty p{
+    color:#777c89;
+}
+
+.text-overlay,
+.text-layer{
     position:absolute;
     font-size:40px;
     font-weight:bold;
+    color:#fff;
     text-shadow:2px 2px 8px #000;
     pointer-events:none;
     display:none;
+    z-index:10;
+    max-width:80%;
+    text-align:center;
 }
 
-.player-controls{
+.player-controls,
+.controls{
     height:55px;
+    min-height:55px;
     display:flex;
     align-items:center;
     gap:10px;
@@ -196,14 +247,26 @@ button:hover{
     border-top:1px solid #292d38;
 }
 
-.player-controls input{
+.player-controls input,
+.controls input{
     flex:1;
+    min-width:70px;
+}
+
+#currentTime,
+#totalTime,
+#time{
+    color:#bbb;
+    font-size:13px;
+    white-space:nowrap;
 }
 
 .timeline{
     height:210px;
+    min-height:210px;
     background:#0d0f14;
     border-top:1px solid #292d38;
+    overflow:hidden;
 }
 
 .timeline-toolbar{
@@ -226,6 +289,7 @@ button:hover{
 
 .tracks{
     padding:5px 10px;
+    overflow:auto;
 }
 
 .track-label{
@@ -240,6 +304,7 @@ button:hover{
     background:#171a21;
     border-radius:6px;
     position:relative;
+    overflow:hidden;
 }
 
 .timeline-clip{
@@ -255,6 +320,8 @@ button:hover{
     align-items:center;
     padding:0 12px;
     overflow:hidden;
+    white-space:nowrap;
+    font-size:12px;
 }
 
 .trim-left,
@@ -287,10 +354,13 @@ button:hover{
     display:flex;
     align-items:center;
     padding-left:10px;
+    overflow:hidden;
+    white-space:nowrap;
 }
 
 .properties{
     width:250px;
+    min-width:250px;
     background:#101218;
     border-left:1px solid #292d38;
     padding:15px;
@@ -317,20 +387,36 @@ button:hover{
 .property select{
     width:100%;
     background:#1a1d25;
-    color:white;
+    color:#fff;
     border:1px solid #303440;
     border-radius:6px;
     padding:8px;
+}
+
+input[type="range"]{
+    accent-color:#756cff;
+    padding:0;
+}
+
+input[type="text"]{
+    outline:none;
+}
+
+input[type="text"]:focus,
+select:focus{
+    border-color:#6c63ff;
 }
 
 @media(max-width:900px){
 
     .media-panel{
         width:180px;
+        min-width:180px;
     }
 
     .properties{
         width:200px;
+        min-width:200px;
     }
 }
 
@@ -343,9 +429,29 @@ button:hover{
 
     .left-panel{
         width:60px;
+        min-width:60px;
     }
 
     .project-name{
         display:none;
+    }
+
+    .logo{
+        font-size:15px;
+    }
+
+    .topbar{
+        padding:0 8px;
+    }
+
+    .top-buttons button,
+    .top-actions button{
+        padding:7px 8px;
+        font-size:11px;
+    }
+
+    .timeline{
+        height:170px;
+        min-height:170px;
     }
 }
