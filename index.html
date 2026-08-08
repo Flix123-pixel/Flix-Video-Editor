@@ -10,7 +10,7 @@
     box-sizing:border-box;
     margin:0;
     padding:0;
-    font-family:Arial,Helvetica,sans-serif;
+    font-family:Arial,sans-serif;
 }
 
 body{
@@ -22,14 +22,14 @@ body{
 button{
     border:0;
     border-radius:8px;
-    padding:9px 14px;
+    padding:9px 13px;
     background:#20232d;
     color:white;
     cursor:pointer;
 }
 
 button:hover{
-    background:#303441;
+    background:#343846;
 }
 
 .app{
@@ -42,17 +42,17 @@ button:hover{
     height:60px;
     flex-shrink:0;
     background:#11131a;
-    border-bottom:1px solid #252936;
+    border-bottom:1px solid #292d38;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 18px;
+    padding:0 15px;
 }
 
 .logo{
-    font-size:22px;
+    font-size:20px;
     font-weight:bold;
-    color:#6c63ff;
+    color:#756cff;
 }
 
 .logo span{
@@ -61,47 +61,42 @@ button:hover{
 
 .top-actions{
     display:flex;
-    gap:10px;
+    gap:7px;
 }
 
 .export{
     background:#6c63ff;
 }
 
-.export:hover{
-    background:#584ff0;
-}
-
 .main{
     flex:1;
-    display:flex;
     min-height:0;
+    display:flex;
 }
 
 .sidebar{
-    width:245px;
+    width:220px;
     flex-shrink:0;
     background:#101218;
-    border-right:1px solid #252936;
-    overflow:auto;
-    padding:10px;
+    border-right:1px solid #292d38;
+    overflow-y:auto;
+    padding:8px;
 }
 
 .tool{
-    padding:11px;
+    background:#181b23;
+    padding:10px;
+    border-radius:8px;
     margin-bottom:6px;
-    border-radius:9px;
     cursor:pointer;
-    background:#171a22;
 }
 
 .tool:hover{
-    background:#242734;
+    background:#282c38;
 }
 
 .tool b{
     display:block;
-    margin-bottom:3px;
 }
 
 .tool small{
@@ -110,110 +105,107 @@ button:hover{
 
 .workspace{
     flex:1;
+    min-width:0;
     display:flex;
     flex-direction:column;
-    min-width:0;
 }
 
 .preview{
+    position:relative;
     flex:1;
+    min-height:0;
+    background:#050609;
     display:flex;
     justify-content:center;
     align-items:center;
-    background:#050609;
-    position:relative;
     overflow:hidden;
 }
 
 .preview video{
     max-width:90%;
-    max-height:80%;
-    background:black;
-    transition:.2s;
+    max-height:85%;
+    background:#000;
 }
 
 .empty{
     position:absolute;
     text-align:center;
-    color:#777c8b;
+    color:#777;
 }
 
 .empty h2{
-    color:#bbb;
+    color:#ccc;
     margin-bottom:8px;
 }
 
 .text-layer{
     position:absolute;
-    color:white;
-    font-size:40px;
-    font-weight:bold;
-    text-shadow:2px 2px 8px #000;
     display:none;
+    color:white;
+    font-size:36px;
+    font-weight:bold;
+    text-shadow:2px 2px 8px black;
     pointer-events:none;
-    z-index:10;
+    z-index:5;
 }
 
 .controls{
-    height:55px;
+    height:58px;
     flex-shrink:0;
     background:#11131a;
-    border-top:1px solid #252936;
+    border-top:1px solid #292d38;
     display:flex;
     align-items:center;
-    gap:12px;
-    padding:0 15px;
+    gap:10px;
+    padding:0 12px;
 }
 
-.controls input[type=range]{
+#seek{
     flex:1;
 }
 
 .timeline{
-    height:190px;
+    height:130px;
     flex-shrink:0;
     background:#0d0f14;
-    border-top:1px solid #292d39;
-    padding:12px;
+    border-top:1px solid #292d38;
+    padding:10px;
 }
 
 .timeline-head{
     display:flex;
     justify-content:space-between;
-    margin-bottom:10px;
-    color:#9da2b0;
+    color:#999;
     font-size:13px;
+    margin-bottom:8px;
 }
 
 .track{
     height:55px;
-    background:#171a22;
+    background:#191c24;
     border-radius:8px;
-    position:relative;
-    overflow:hidden;
+    padding:6px;
 }
 
 .clip{
-    position:absolute;
-    top:7px;
-    bottom:7px;
-    left:5px;
-    right:5px;
-    border-radius:6px;
+    height:43px;
     background:linear-gradient(90deg,#5148db,#756dff);
+    border-radius:6px;
     display:flex;
     align-items:center;
     padding:0 12px;
     font-weight:bold;
+    overflow:hidden;
+    white-space:nowrap;
 }
 
 .properties{
-    width:270px;
+    width:245px;
     flex-shrink:0;
     background:#101218;
-    border-left:1px solid #252936;
-    overflow:auto;
-    padding:14px;
+    border-left:1px solid #292d38;
+    padding:12px;
+    overflow-y:auto;
 }
 
 .properties h3{
@@ -221,111 +213,74 @@ button:hover{
 }
 
 .prop{
-    margin-bottom:18px;
+    margin-bottom:16px;
 }
 
 .prop label{
     display:block;
-    font-size:13px;
     color:#aaa;
-    margin-bottom:7px;
+    font-size:13px;
+    margin-bottom:6px;
 }
 
 .prop input,
 .prop select{
     width:100%;
+}
+
+.prop input[type=text]{
     padding:8px;
-    border-radius:7px;
-    border:1px solid #303440;
     background:#191c24;
     color:white;
+    border:1px solid #333;
+    border-radius:7px;
 }
 
 .modal{
-    display:none;
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.78);
-    z-index:9999;
+    background:rgba(0,0,0,.75);
+    display:none;
     align-items:center;
     justify-content:center;
+    z-index:9999;
 }
 
 .modal-box{
-    width:min(650px,92%);
+    width:min(600px,92%);
     max-height:85vh;
     overflow:auto;
     background:#151820;
-    border:1px solid #303440;
-    border-radius:18px;
-    padding:22px;
+    border:1px solid #353947;
+    border-radius:15px;
+    padding:20px;
 }
 
 .modal-head{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:18px;
+    margin-bottom:15px;
 }
 
-.close{
-    font-size:20px;
-    padding:5px 11px;
+.modal-content{
+    color:#bbb;
+    line-height:1.6;
 }
 
-.action{
-    width:100%;
+.modal-content button{
     margin-top:10px;
-    background:#6c63ff;
-}
-
-.tool-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:9px;
-}
-
-.tool-grid button{
-    padding:13px;
-}
-
-.result{
-    margin-top:15px;
-    padding:15px;
-    border-radius:10px;
-    background:#0d0f14;
-    color:#aaa;
-}
-
-.filter-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:8px;
-}
-
-.filter-grid button{
-    padding:12px 5px;
-}
-
-.stickers{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:10px;
-}
-
-.stickers button{
-    font-size:25px;
 }
 
 @media(max-width:800px){
 
     .sidebar{
-        width:75px;
+        width:70px;
     }
 
     .tool{
         text-align:center;
-        padding:9px 4px;
+        padding:8px 3px;
     }
 
     .tool small{
@@ -337,39 +292,28 @@ button:hover{
     }
 
     .properties{
-        width:190px;
+        width:180px;
     }
 }
 
 @media(max-width:600px){
 
-    .sidebar{
-        display:none;
-    }
-
+    .sidebar,
     .properties{
         display:none;
     }
 
-    .timeline{
-        height:145px;
-    }
-
     .logo{
-        font-size:16px;
+        font-size:15px;
     }
 
     .topbar{
-        padding:0 8px;
-    }
-
-    .top-actions{
-        gap:4px;
+        padding:0 7px;
     }
 
     .top-actions button{
-        padding:7px 8px;
-        font-size:12px;
+        padding:7px;
+        font-size:11px;
     }
 }
 </style>
@@ -393,48 +337,50 @@ button:hover{
 
 </header>
 
+
 <div class="main">
+
 
 <aside class="sidebar">
 
     <div class="tool" onclick="openVideo()">
         <b>🎬 Media</b>
-        <small>Video & images</small>
+        <small>Import video</small>
     </div>
 
-    <div class="tool" onclick="openFeature('AI Effect')">
+    <div class="tool" onclick="showFeature('AI Effect')">
         <b>✨ AI Effect</b>
         <small>AI effects</small>
     </div>
 
-    <div class="tool" onclick="openFeature('Transition')">
+    <div class="tool" onclick="showFeature('Transition')">
         <b>🎬 Transition</b>
-        <small>Clip transition</small>
+        <small>Transitions</small>
     </div>
 
-    <div class="tool" onclick="openFeature('AI Speech')">
+    <div class="tool" onclick="showFeature('AI Speech')">
         <b>🗣 AI Speech</b>
         <small>AI voice</small>
     </div>
 
-    <div class="tool" onclick="openFeature('Voice Enhance')">
+    <div class="tool" onclick="showFeature('Voice Enhance')">
         <b>🎙 Voice Enhance</b>
         <small>Clean voice</small>
     </div>
 
-    <div class="tool" onclick="openFeature('AI Enhance')">
+    <div class="tool" onclick="showFeature('AI Enhance')">
         <b>✨ AI Enhance</b>
         <small>Improve video</small>
     </div>
 
-    <div class="tool" onclick="openFeature('Auto Captions')">
+    <div class="tool" onclick="showFeature('Auto Captions')">
         <b>💬 Auto Captions</b>
-        <small>Generate captions</small>
+        <small>Captions</small>
     </div>
 
     <div class="tool" onclick="splitVideo()">
         <b>✂ Split</b>
-        <small>Split clip</small>
+        <small>Split at current time</small>
     </div>
 
     <div class="tool" onclick="autoAdjust()">
@@ -454,12 +400,12 @@ button:hover{
 
     <div class="tool" onclick="openStickers()">
         <b>⭐ Stickers</b>
-        <small>Add stickers</small>
+        <small>Add sticker</small>
     </div>
 
     <div class="tool" onclick="showText()">
         <b>🔤 Text</b>
-        <small>Write on video</small>
+        <small>Add text</small>
     </div>
 
     <div class="tool" onclick="openFilters()">
@@ -467,17 +413,17 @@ button:hover{
         <small>Video filters</small>
     </div>
 
-    <div class="tool" onclick="openFeature('Thumbnail Maker')">
+    <div class="tool" onclick="showFeature('Thumbnail Maker')">
         <b>🖼 Thumbnail Maker</b>
         <small>Create thumbnail</small>
     </div>
 
-    <div class="tool" onclick="openFeature('AI Photo Maker')">
+    <div class="tool" onclick="showFeature('AI Photo Maker')">
         <b>🤖 AI Photo Maker</b>
         <small>AI image</small>
     </div>
 
-    <div class="tool" onclick="openFeature('AI Video Maker')">
+    <div class="tool" onclick="showFeature('AI Video Maker')">
         <b>🎥 AI Video Maker</b>
         <small>AI video</small>
     </div>
@@ -487,32 +433,33 @@ button:hover{
         <small>Speak text</small>
     </div>
 
-    <div class="tool" onclick="openFeature('Sound Effects')">
-        <b>🔉 Sound Effects</b>
-        <small>Audio effects</small>
-    </div>
-
-    <div class="tool" onclick="openFeature('Music')">
-        <b>🎵 Music</b>
-        <small>Add music</small>
-    </div>
-
     <div class="tool" onclick="speechToText()">
         <b>🗣➡📝 Speech to Text</b>
         <small>Voice typing</small>
     </div>
 
-    <div class="tool" onclick="openFeature('Dubbing')">
+    <div class="tool" onclick="showFeature('Sound Effects')">
+        <b>🔉 Sound Effects</b>
+        <small>Audio effects</small>
+    </div>
+
+    <div class="tool" onclick="showFeature('Music')">
+        <b>🎵 Music</b>
+        <small>Add music</small>
+    </div>
+
+    <div class="tool" onclick="showFeature('Dubbing')">
         <b>🌍 Dubbing</b>
         <small>Dub video</small>
     </div>
 
-    <div class="tool" onclick="openFeature('Text to Music')">
+    <div class="tool" onclick="showFeature('Text to Music')">
         <b>📝➡🎵 Text to Music</b>
         <small>AI music</small>
     </div>
 
 </aside>
+
 
 <section class="workspace">
 
@@ -523,11 +470,19 @@ button:hover{
             <p>Import a video to start editing</p>
         </div>
 
-        <video id="video" controls style="display:none"></video>
+        <video
+            id="video"
+            controls
+            style="display:none"
+        ></video>
 
-        <div id="textLayer" class="text-layer"></div>
+        <div
+            id="textLayer"
+            class="text-layer"
+        ></div>
 
     </div>
+
 
     <div class="controls">
 
@@ -548,6 +503,7 @@ button:hover{
 
     </div>
 
+
     <div class="timeline">
 
         <div class="timeline-head">
@@ -556,12 +512,18 @@ button:hover{
         </div>
 
         <div class="track">
-            <div class="clip" id="clip">🎬 Video Clip</div>
+            <div
+                class="clip"
+                id="clip"
+            >
+                🎬 Video Clip
+            </div>
         </div>
 
     </div>
 
 </section>
+
 
 <aside class="properties">
 
@@ -569,58 +531,103 @@ button:hover{
 
     <div class="prop">
         <label>Brightness</label>
-        <input id="brightness" type="range"
-               min="50" max="150" value="100"
-               oninput="filters()">
+
+        <input
+            id="brightness"
+            type="range"
+            min="50"
+            max="150"
+            value="100"
+            oninput="applyFilters()"
+        >
     </div>
+
 
     <div class="prop">
         <label>Contrast</label>
-        <input id="contrast" type="range"
-               min="50" max="150" value="100"
-               oninput="filters()">
+
+        <input
+            id="contrast"
+            type="range"
+            min="50"
+            max="150"
+            value="100"
+            oninput="applyFilters()"
+        >
     </div>
+
 
     <div class="prop">
         <label>Saturation</label>
-        <input id="saturation" type="range"
-               min="0" max="200" value="100"
-               oninput="filters()">
+
+        <input
+            id="saturation"
+            type="range"
+            min="0"
+            max="200"
+            value="100"
+            oninput="applyFilters()"
+        >
     </div>
+
 
     <div class="prop">
         <label>Blur</label>
-        <input id="blur" type="range"
-               min="0" max="10" value="0"
-               oninput="filters()">
+
+        <input
+            id="blur"
+            type="range"
+            min="0"
+            max="10"
+            value="0"
+            oninput="applyFilters()"
+        >
     </div>
 
+
     <div class="prop">
+
         <label>Aspect Ratio</label>
 
-        <select onchange="aspect(this.value)">
+        <select onchange="changeAspect(this.value)">
+
             <option value="auto">Original</option>
             <option value="16/9">16 : 9</option>
             <option value="9/16">9 : 16</option>
             <option value="1/1">1 : 1</option>
+
         </select>
+
     </div>
 
+
     <div class="prop">
+
         <label>Volume</label>
 
-        <input id="volume" type="range"
-               min="0" max="100" value="100"
-               oninput="setVolume(this.value)">
+        <input
+            id="volume"
+            type="range"
+            min="0"
+            max="100"
+            value="100"
+            oninput="setVolume(this.value)"
+        >
+
     </div>
 
+
     <div class="prop">
+
         <label>Text</label>
 
-        <input id="textInput"
-               type="text"
-               placeholder="Enter text"
-               oninput="updateText()">
+        <input
+            id="textInput"
+            type="text"
+            placeholder="Enter text"
+            oninput="updateText()"
+        >
+
     </div>
 
 </aside>
@@ -628,79 +635,102 @@ button:hover{
 </div>
 </div>
 
-<!-- FILE INPUTS -->
 
 <input
     id="fileInput"
     type="file"
-    accept="video/mp4,video/webm,video/ogg"
+    accept="video/*"
     hidden
 >
 
-<input
-    id="imageInput"
-    type="file"
-    accept="image/*"
-    hidden
+
+<div
+    class="modal"
+    id="modal"
 >
-
-<!-- MODAL -->
-
-<div class="modal" id="modal">
 
     <div class="modal-box">
 
         <div class="modal-head">
-            <h2 id="modalTitle">Flix Tool</h2>
 
-            <button class="close" onclick="closeModal()">×</button>
+            <h2 id="modalTitle">
+                Flix Tool
+            </h2>
+
+            <button onclick="closeModal()">
+                ×
+            </button>
+
         </div>
 
-        <div id="modalContent"></div>
+        <div
+            id="modalContent"
+            class="modal-content"
+        ></div>
 
     </div>
 
 </div>
 
 
-<!-- =====================================================
-     ONLY ONE SCRIPT
-===================================================== -->
-
 <script>
 
-const video = document.getElementById("video");
-const fileInput = document.getElementById("fileInput");
-const empty = document.getElementById("empty");
-const seek = document.getElementById("seek");
-const time = document.getElementById("time");
-const duration = document.getElementById("duration");
-const textLayer = document.getElementById("textLayer");
-const clip = document.getElementById("clip");
+/* =====================================================
+   FLIX VIDEO EDITOR
+   SINGLE JAVASCRIPT
+   NO DUPLICATE SCRIPT
+===================================================== */
 
-const modal = document.getElementById("modal");
-const modalTitle = document.getElementById("modalTitle");
-const modalContent = document.getElementById("modalContent");
+const video =
+    document.getElementById("video");
+
+const fileInput =
+    document.getElementById("fileInput");
+
+const empty =
+    document.getElementById("empty");
+
+const seek =
+    document.getElementById("seek");
+
+const time =
+    document.getElementById("time");
+
+const duration =
+    document.getElementById("duration");
+
+const clip =
+    document.getElementById("clip");
+
+const textLayer =
+    document.getElementById("textLayer");
+
+const modal =
+    document.getElementById("modal");
+
+const modalTitle =
+    document.getElementById("modalTitle");
+
+const modalContent =
+    document.getElementById("modalContent");
 
 let videoURL = null;
-let currentFile = null;
-let rotation = 0;
-let flipped = false;
 
 
-/* =========================
-   IMPORT
-========================= */
+/* =====================================================
+   IMPORT VIDEO
+===================================================== */
 
 function openVideo(){
 
     fileInput.value = "";
+
     fileInput.click();
 
 }
 
 
-fileInput.addEventListener("change", function(){
+fileInput.addEventListener("change",function(){
 
     const file = this.files[0];
 
@@ -711,17 +741,18 @@ fileInput.addEventListener("change", function(){
     if(!file.type.startsWith("video/")){
 
         alert("Please select a video file.");
+
         return;
-
     }
-
-    currentFile = file;
 
     if(videoURL){
+
         URL.revokeObjectURL(videoURL);
+
     }
 
-    videoURL = URL.createObjectURL(file);
+    videoURL =
+        URL.createObjectURL(file);
 
     video.pause();
 
@@ -731,55 +762,111 @@ fileInput.addEventListener("change", function(){
 
     empty.style.display = "none";
 
+    clip.textContent =
+        "🎬 " + file.name;
+
     video.load();
 
-    clip.textContent = "🎬 " + file.name;
-
 });
 
 
-/* =========================
+/* =====================================================
    VIDEO LOADED
-========================= */
+===================================================== */
 
-video.addEventListener("loadedmetadata", function(){
+video.addEventListener(
+    "loadedmetadata",
+    function(){
 
-    duration.textContent =
-        formatTime(video.duration);
+        duration.textContent =
+            formatTime(video.duration);
 
-    time.textContent =
-        "00:00 / " + formatTime(video.duration);
+        time.textContent =
+            "00:00 / " +
+            formatTime(video.duration);
 
-    seek.value = 0;
+        seek.value = 0;
 
-});
+    }
+);
 
 
-/* =========================
+/* =====================================================
+   VIDEO TIME UPDATE
+===================================================== */
+
+video.addEventListener(
+    "timeupdate",
+    function(){
+
+        if(video.duration){
+
+            seek.value =
+                (video.currentTime /
+                video.duration) * 100;
+
+        }
+
+        time.textContent =
+            formatTime(video.currentTime) +
+            " / " +
+            formatTime(video.duration);
+
+    }
+);
+
+
+/* =====================================================
    VIDEO ERROR
-========================= */
+===================================================== */
 
-video.addEventListener("error", function(){
+video.addEventListener(
+    "error",
+    function(){
 
-    alert(
-        "Video browser mein play nahi ho raha.\n\n" +
-        "MP4 (H.264) ya WebM video try karo."
-    );
+        alert(
+            "Video play nahi ho paya. " +
+            "Testing ke liye MP4 (H.264) video use karo."
+        );
 
-});
+    }
+);
 
 
-/* =========================
+/* =====================================================
+   FORMAT TIME
+===================================================== */
+
+function formatTime(seconds){
+
+    if(!isFinite(seconds)){
+        return "00:00";
+    }
+
+    const minutes =
+        Math.floor(seconds / 60);
+
+    const secondsPart =
+        Math.floor(seconds % 60);
+
+    return String(minutes).padStart(2,"0")
+        + ":" +
+        String(secondsPart).padStart(2,"0");
+
+}
+
+
+/* =====================================================
    PLAY / PAUSE
-========================= */
+===================================================== */
 
 function playPause(){
 
     if(!video.src){
 
         alert("Pehle video import karo.");
-        return;
 
+        return;
     }
 
     if(video.paused){
@@ -799,42 +886,9 @@ function playPause(){
 }
 
 
-/* =========================
-   TIME
-========================= */
-
-function formatTime(seconds){
-
-    if(!isFinite(seconds)){
-        return "00:00";
-    }
-
-    const m = Math.floor(seconds / 60);
-    const s = Math.floor(seconds % 60);
-
-    return String(m).padStart(2,"0") +
-           ":" +
-           String(s).padStart(2,"0");
-
-}
-
-
-video.addEventListener("timeupdate", function(){
-
-    if(!video.duration){
-        return;
-    }
-
-    seek.value =
-        (video.currentTime / video.duration) * 100;
-
-    time.textContent =
-        formatTime(video.currentTime) +
-        " / " +
-        formatTime(video.duration);
-
-});
-
+/* =====================================================
+   SEEK
+===================================================== */
 
 function seekVideo(value){
 
@@ -843,25 +897,26 @@ function seekVideo(value){
     }
 
     video.currentTime =
-        video.duration * (Number(value) / 100);
+        (value / 100) * video.duration;
 
 }
 
 
-/* =========================
-   AUDIO
-========================= */
+/* =====================================================
+   MUTE
+===================================================== */
 
 function toggleMute(){
 
-    if(!video.src){
-        return;
-    }
-
-    video.muted = !video.muted;
+    video.muted =
+        !video.muted;
 
 }
 
+
+/* =====================================================
+   VOLUME
+===================================================== */
 
 function setVolume(value){
 
@@ -871,145 +926,142 @@ function setVolume(value){
 }
 
 
-/* =========================
-   NEW PROJECT
-========================= */
-
-function newProject(){
-
-    if(videoURL){
-
-        URL.revokeObjectURL(videoURL);
-        videoURL = null;
-
-    }
-
-    currentFile = null;
-
-    video.pause();
-    video.removeAttribute("src");
-    video.load();
-
-    video.style.display = "none";
-    video.style.filter = "none";
-    video.style.transform = "";
-
-    empty.style.display = "block";
-
-    seek.value = 0;
-
-    time.textContent =
-        "00:00 / 00:00";
-
-    duration.textContent =
-        "00:00";
-
-    clip.textContent =
-        "🎬 Video Clip";
-
-    document.getElementById("brightness").value = 100;
-    document.getElementById("contrast").value = 100;
-    document.getElementById("saturation").value = 100;
-    document.getElementById("blur").value = 0;
-    document.getElementById("volume").value = 100;
-
-    textLayer.textContent = "";
-    textLayer.style.display = "none";
-
-    document.getElementById("textInput").value = "";
-
-    rotation = 0;
-    flipped = false;
-
-}
-
-
-/* =========================
+/* =====================================================
    FILTERS
-========================= */
+===================================================== */
 
-function filters(){
+function applyFilters(){
 
     if(!video.src){
         return;
     }
 
-    const b =
-        document.getElementById("brightness").value;
+    const brightness =
+        document.getElementById(
+            "brightness"
+        ).value;
 
-    const c =
-        document.getElementById("contrast").value;
+    const contrast =
+        document.getElementById(
+            "contrast"
+        ).value;
 
-    const s =
-        document.getElementById("saturation").value;
+    const saturation =
+        document.getElementById(
+            "saturation"
+        ).value;
 
     const blur =
-        document.getElementById("blur").value;
+        document.getElementById(
+            "blur"
+        ).value;
 
     video.style.filter =
-        "brightness("+b+"%) " +
-        "contrast("+c+"%) " +
-        "saturate("+s+"%) " +
-        "blur("+blur+"px)";
+        "brightness(" + brightness + "%) " +
+        "contrast(" + contrast + "%) " +
+        "saturate(" + saturation + "%) " +
+        "blur(" + blur + "px)";
 
 }
 
 
-/* =========================
+/* =====================================================
    AUTO ADJUST
-========================= */
+===================================================== */
 
 function autoAdjust(){
 
-    document.getElementById("brightness").value = 108;
-    document.getElementById("contrast").value = 110;
-    document.getElementById("saturation").value = 110;
+    document.getElementById(
+        "brightness"
+    ).value = 108;
 
-    filters();
+    document.getElementById(
+        "contrast"
+    ).value = 110;
+
+    document.getElementById(
+        "saturation"
+    ).value = 110;
+
+    applyFilters();
 
     showMessage(
         "Auto Adjust",
-        "Brightness, contrast and saturation automatically adjusted."
+        "Brightness, contrast and saturation adjusted."
     );
 
 }
 
 
-/* =========================
+/* =====================================================
    ASPECT RATIO
-========================= */
+===================================================== */
 
-function aspect(value){
+function changeAspect(value){
 
     if(value === "auto"){
 
-        video.style.aspectRatio = "auto";
+        video.style.aspectRatio =
+            "auto";
 
-    }else{
+        video.style.width = "";
+        video.style.height = "";
 
-        video.style.aspectRatio = value;
+        return;
+    }
+
+    video.style.aspectRatio =
+        value;
+
+    if(value === "16/9"){
+
+        video.style.width =
+            "70%";
+
+        video.style.height =
+            "auto";
+
+    }
+
+    if(value === "9/16"){
+
+        video.style.height =
+            "70%";
+
+        video.style.width =
+            "auto";
+
+    }
+
+    if(value === "1/1"){
+
+        video.style.width =
+            "60%";
+
+        video.style.aspectRatio =
+            "1 / 1";
+
+        video.style.objectFit =
+            "contain";
 
     }
 
 }
 
 
-/* =========================
+/* =====================================================
    TEXT
-========================= */
+===================================================== */
 
 function showText(){
 
-    const text = prompt("Enter text:");
+    textLayer.style.display =
+        "block";
 
-    if(!text){
-        return;
-    }
-
-    textLayer.textContent = text;
-    textLayer.style.display = "block";
-
-    document.getElementById("textInput").value = text;
+    textLayer.textContent =
+        document.getElementById(
+            "textInput"
+        ).value || "Your Text";
 
 }
 
@@ -1017,97 +1069,45 @@ function showText(){
 function updateText(){
 
     const value =
-        document.getElementById("textInput").value;
+        document.getElementById(
+            "textInput"
+        ).value;
 
-    textLayer.textContent = value;
+    if(value){
 
-    textLayer.style.display =
-        value.trim() ? "block" : "none";
+        textLayer.textContent =
+            value;
 
-}
+        textLayer.style.display =
+            "block";
 
+    }else{
 
-/* =========================
-   MODAL
-========================= */
+        textLayer.textContent = "";
 
-function openModal(title, content){
+        textLayer.style.display =
+            "none";
 
-    modalTitle.textContent = title;
-    modalContent.innerHTML = content;
-
-    modal.style.display = "flex";
-
-}
-
-
-function closeModal(){
-
-    modal.style.display = "none";
+    }
 
 }
 
 
-function showMessage(title, message){
-
-    openModal(
-        "✨ " + title,
-        `
-        <div class="result">
-            ${message}
-        </div>
-
-        <button class="action" onclick="closeModal()">
-            OK
-        </button>
-        `
-    );
-
-}
-
-
-/* =========================
-   GENERIC FEATURES
-========================= */
-
-function openFeature(name){
-
-    openModal(
-        "✨ " + name,
-        `
-        <p style="color:#aaa;line-height:1.6">
-            <b>${name}</b> is available in the Flix interface.
-        </p>
-
-        <div class="result">
-            Basic browser editor features work locally.
-            Advanced AI processing needs a separate AI/backend service.
-        </div>
-
-        <button class="action" onclick="closeModal()">
-            OK
-        </button>
-        `
-    );
-
-}
-
-
-/* =========================
+/* =====================================================
    SPLIT
-========================= */
+===================================================== */
 
 function splitVideo(){
 
     if(!video.src){
 
         alert("Pehle video import karo.");
-        return;
 
+        return;
     }
 
     showMessage(
-        "Split",
+        "✂ Split",
         "Split point: " +
         formatTime(video.currentTime)
     );
@@ -1115,35 +1115,69 @@ function splitVideo(){
 }
 
 
-/* =========================
+/* =====================================================
    HSL
-========================= */
+===================================================== */
 
 function openHSL(){
 
     openModal(
         "🎨 HSL",
         `
-        <div class="prop">
-            <label>Hue</label>
-            <input id="hue"
-                   type="range"
-                   min="-180"
-                   max="180"
-                   value="0"
-                   oninput="applyHSL()">
-        </div>
+        <p>HSL controls</p>
 
-        <div class="prop">
-            <label>Saturation</label>
-            <input id="hslSat"
-                   type="range"
-                   min="0"
-                   max="200"
-                   value="100"
-                   oninput="applyHSL()">
-        </div>
+        <br>
 
-        <div class="prop">
-            <label>Lightness</label>
-            <inp
+        <label>Hue</label>
+        <input
+            type="range"
+            min="-180"
+            max="180"
+            value="0"
+            oninput="applyHSL(this.value,100,100)"
+        >
+
+        <br><br>
+
+        <label>Saturation</label>
+        <input
+            type="range"
+            min="0"
+            max="200"
+            value="100"
+            oninput="applyHSL(0,this.value,100)"
+        >
+
+        <br><br>
+
+        <label>Lightness</label>
+        <input
+            type="range"
+            min="0"
+            max="200"
+            value="100"
+            oninput="applyHSL(0,100,this.value)"
+        >
+        `
+    );
+
+}
+
+
+function applyHSL(h,s,l){
+
+    if(!video.src){
+        return;
+    }
+
+    video.style.filter =
+        "hue-rotate(" + h + "deg) " +
+        "saturate(" + s + "%) " +
+        "brightness(" + l + "%)";
+
+}
+
+
+/* =====================================================
+   FILTERS MENU
+========================================
