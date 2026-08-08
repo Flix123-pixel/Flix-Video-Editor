@@ -905,13 +905,217 @@ video.addEventListener("loadedmetadata", function(){
 });
 
 
-video.addEventListener("timeupdate", function(){
+<script>
 
-    if(!video.duration){
+/* =====================================================
+   FLIX VIDEO EDITOR
+   COMPLETE JAVASCRIPT
+===================================================== */
 
+const video = document.getElementById("video");
+const fileInput = document.getElementById("fileInput");
+const imageInput = document.getElementById("imageInput");
+const empty = document.getElementById("empty");
+const seek = document.getElementById("seek");
+const time = document.getElementById("time");
+const duration = document.getElementById("duration");
+const textLayer = document.getElementById("textLayer");
+
+const modal = document.getElementById("modal");
+const modalTitle = document.getElementById("modalTitle");
+const modalContent = document.getElementById("modalContent");
+
+let videoURL = null;
+let rotation = 0;
+let flipped = false;
+
+
+/* =====================================================
+   IMPORT
+===================================================== */
+
+function openVideo(){
+
+    fileInput.value = "";
+    fileInput.click();
+
+}
+
+fileInput.addEventListener("change", function(){
+
+    const file = this.files[0];
+
+    if(!file) return;
+
+    if(!file.type.startsWith("video/")){
+
+        alert("Please select a video file.");
         return;
 
     }
+
+    if(videoURL){
+
+        URL.revokeObjectURL(videoURL);
+
+    }
+
+    videoURL = URL.createObjectURL(file);
+
+    video.pause();
+
+    video.src = videoURL;
+
+    video.style.display = "block";
+
+    empty.style.display = "none";
+
+    video.load();
+
+    const clip = document.getElementById("clip");
+
+    if(clip){
+
+        clip.textContent = "🎬 " + file.name;
+
+    }
+
+});
+
+
+/* =====================================================
+   VIDEO ERROR
+===================================================== */
+
+video.addEventListener("error", function(){
+
+    if(video.src){
+
+        alert(
+            "Video load nahi ho paya. MP4 (H.264) ya WebM video try karo."
+        );
+
+    }
+
+});
+
+
+/* =====================================================
+   NEW PROJECT
+===================================================== */
+
+function newProject(){
+
+    if(videoURL){
+
+        URL.revokeObjectURL(videoURL);
+        videoURL = null;
+
+    }
+
+    video.pause();
+    video.removeAttribute("src");
+    video.load();
+
+    video.style.display = "none";
+    video.style.filter = "none";
+    video.style.transform = "";
+
+    empty.style.display = "block";
+
+    seek.value = 0;
+
+    time.textContent = "00:00 / 00:00";
+
+    duration.textContent = "00:00";
+
+    document.getElementById("clip").textContent =
+        "🎬 Video Clip";
+
+    document.getElementById("brightness").value = 100;
+    document.getElementById("contrast").value = 100;
+    document.getElementById("saturation").value = 100;
+    document.getElementById("blur").value = 0;
+    document.getElementById("volume").value = 100;
+
+    textLayer.textContent = "";
+    textLayer.style.display = "none";
+
+    document.getElementById("textInput").value = "";
+
+    rotation = 0;
+    flipped = false;
+
+}
+
+
+/* =====================================================
+   PLAY / PAUSE
+===================================================== */
+
+function playPause(){
+
+    if(!video.src){
+
+        alert("Pehle video import karo.");
+        return;
+
+    }
+
+    if(video.paused){
+
+        video.play().catch(function(){
+
+            alert("Video play nahi ho paya.");
+
+        });
+
+    }else{
+
+        video.pause();
+
+    }
+
+}
+
+
+/* =====================================================
+   TIME
+===================================================== */
+
+function formatTime(seconds){
+
+    if(!isFinite(seconds)){
+
+        return "00:00";
+
+    }
+
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+
+    return String(m).padStart(2,"0") +
+           ":" +
+           String(s).padStart(2,"0");
+
+}
+
+
+video.addEventListener("loadedmetadata", function(){
+
+    duration.textContent =
+        formatTime(video.duration);
+
+    time.textContent =
+        "00:00 / " +
+        formatTime(video.duration);
+
+});
+
+
+video.addEventListener("timeupdate", function(){
+
+    if(!video.duration) return;
 
     seek.value =
         (video.currentTime / video.duration) * 100;
@@ -926,14 +1130,11 @@ video.addEventListener("timeupdate", function(){
 
 function seekVideo(value){
 
-    if(!video.duration){
-
-        return;
-
-    }
+    if(!video.duration) return;
 
     video.currentTime =
-        video.duration * (Number(value) / 100);
+        video.duration *
+        (Number(value) / 100);
 
 }
 
@@ -943,6 +1144,13 @@ function seekVideo(value){
 ===================================================== */
 
 function toggleMute(){
+
+    if(!video.src){
+
+        alert("Pehle video import karo.");
+        return;
+
+    }
 
     video.muted = !video.muted;
 
@@ -963,6 +1171,13 @@ function setVolume(value){
 
 function setSpeed(){
 
+    if(!video.src){
+
+        alert("Pehle video import karo.");
+        return;
+
+    }
+
     const input =
         prompt("Speed: 0.25, 0.5, 1, 1.5, 2");
 
@@ -973,13 +1188,17 @@ function setSpeed(){
 
         video.playbackRate = speed;
 
+    }else{
+
+        alert("Speed 0.25 se 2 ke beech honi chahiye.");
+
     }
 
 }
 
 
 /* =====================================================
-   ROTATE
+   ROTATE / FLIP
 ===================================================== */
 
 function rotateVideo(){
@@ -1054,9 +1273,7 @@ function filters(){
 function autoAdjust(){
 
     document.getElementById("brightness").value = 108;
-
     document.getElementById("contrast").value = 110;
-
     document.getElementById("saturation").value = 110;
 
     filters();
@@ -1075,6 +1292,7 @@ function openHSL(){
         `
         <div class="prop">
             <label>Hue</label>
+
             <input
                 id="hue"
                 type="range"
@@ -1087,6 +1305,7 @@ function openHSL(){
 
         <div class="prop">
             <label>Saturation</label>
+
             <input
                 id="hslSat"
                 type="range"
@@ -1099,6 +1318,7 @@ function openHSL(){
 
         <div class="prop">
             <label>Lightness</label>
+
             <input
                 id="lightness"
                 type="range"
@@ -1116,5 +1336,668 @@ function openHSL(){
 
 function applyHSL(){
 
-    const h =
-        document.getElementById("hue"
+    const hue =
+        document.getElementById("hue").value;
+
+    const saturation =
+        document.getElementById("hslSat").value;
+
+    const lightness =
+        document.getElementById("lightness").value;
+
+    video.style.filter =
+        "hue-rotate(" + hue + "deg) " +
+        "saturate(" + saturation + "%) " +
+        "brightness(" + lightness + "%)";
+
+}
+
+
+/* =====================================================
+   ASPECT RATIO
+===================================================== */
+
+function aspect(value){
+
+    video.style.aspectRatio =
+        value === "auto"
+        ? "auto"
+        : value;
+
+}
+
+
+/* =====================================================
+   TEXT
+===================================================== */
+
+function showText(){
+
+    const text =
+        prompt("Video par kya text likhna hai?");
+
+    if(!text) return;
+
+    textLayer.textContent = text;
+
+    textLayer.style.display = "block";
+
+    document.getElementById("textInput").value =
+        text;
+
+}
+
+
+function updateText(){
+
+    const value =
+        document.getElementById("textInput").value;
+
+    textLayer.textContent = value;
+
+    textLayer.style.display =
+        value.trim()
+        ? "block"
+        : "none";
+
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+function openModal(title, content){
+
+    modalTitle.textContent = title;
+
+    modalContent.innerHTML = content;
+
+    modal.style.display = "flex";
+
+}
+
+
+function closeModal(){
+
+    modal.style.display = "none";
+
+}
+
+
+/* =====================================================
+   GENERIC FEATURES
+===================================================== */
+
+function openFeature(name){
+
+    openModal(
+        "✨ " + name,
+        `
+        <p style="color:#aaa;line-height:1.6">
+            <b>${name}</b> tool Flix Video Editor mein
+            select kiya gaya hai.
+        </p>
+
+        <div class="result">
+            Ye feature interface mein ready hai.
+            Advanced AI processing ke liye backend/API
+            ki zarurat hoti hai.
+        </div>
+
+        <button
+            class="action"
+            onclick="closeModal()">
+            OK
+        </button>
+        `
+    );
+
+}
+
+
+/* =====================================================
+   SPLIT
+===================================================== */
+
+function splitVideo(){
+
+    if(!video.src){
+
+        alert("Pehle video import karo.");
+        return;
+
+    }
+
+    alert(
+        "Split point: " +
+        formatTime(video.currentTime)
+    );
+
+}
+
+
+/* =====================================================
+   THEME
+===================================================== */
+
+function openTheme(){
+
+    openModal(
+        "🎭 Themes",
+        `
+        <div class="tool-grid">
+
+            <button onclick="applyTheme('cinematic')">
+                🎬 Cinematic
+            </button>
+
+            <button onclick="applyTheme('vivid')">
+                🌈 Vivid
+            </button>
+
+            <button onclick="applyTheme('dark')">
+                🌑 Dark
+            </button>
+
+            <button onclick="applyTheme('warm')">
+                ☀️ Warm
+            </button>
+
+            <button onclick="applyTheme('normal')">
+                🔄 Normal
+            </button>
+
+        </div>
+        `
+    );
+
+}
+
+
+function applyTheme(theme){
+
+    if(theme === "cinematic"){
+
+        video.style.filter =
+            "contrast(115%) saturate(85%)";
+
+    }
+
+    else if(theme === "vivid"){
+
+        video.style.filter =
+            "contrast(110%) saturate(135%)";
+
+    }
+
+    else if(theme === "dark"){
+
+        video.style.filter =
+            "brightness(80%) contrast(120%)";
+
+    }
+
+    else if(theme === "warm"){
+
+        video.style.filter =
+            "brightness(105%) saturate(120%) sepia(15%)";
+
+    }
+
+    else{
+
+        video.style.filter = "none";
+
+    }
+
+}
+
+
+/* =====================================================
+   STICKERS
+===================================================== */
+
+function openStickers(){
+
+    openModal(
+        "⭐ Stickers",
+        `
+        <div class="stickers">
+
+            <button onclick="addSticker('⭐')">⭐</button>
+            <button onclick="addSticker('🔥')">🔥</button>
+            <button onclick="addSticker('❤️')">❤️</button>
+            <button onclick="addSticker('😂')">😂</button>
+            <button onclick="addSticker('😎')">😎</button>
+            <button onclick="addSticker('🎮')">🎮</button>
+            <button onclick="addSticker('💥')">💥</button>
+            <button onclick="addSticker('⚡')">⚡</button>
+            <button onclick="addSticker('👑')">👑</button>
+            <button onclick="addSticker('🚀')">🚀</button>
+
+        </div>
+        `
+    );
+
+}
+
+
+function addSticker(sticker){
+
+    textLayer.textContent = sticker;
+
+    textLayer.style.display = "block";
+
+    textLayer.style.fontSize = "60px";
+
+    closeModal();
+
+}
+
+
+/* =====================================================
+   ANIMATION
+===================================================== */
+
+function openAnimation(){
+
+    openModal(
+        "🎞 Animation",
+        `
+        <div class="tool-grid">
+
+            <button onclick="animateText('zoom')">
+                🔍 Zoom
+            </button>
+
+            <button onclick="animateText('bounce')">
+                🏀 Bounce
+            </button>
+
+            <button onclick="animateText('spin')">
+                🔄 Spin
+            </button>
+
+            <button onclick="animateText('none')">
+                ❌ Remove
+            </button>
+
+        </div>
+        `
+    );
+
+}
+
+
+function animateText(type){
+
+    if(type === "zoom"){
+
+        textLayer.style.animation =
+            "flixZoom 1s infinite alternate";
+
+    }
+
+    else if(type === "bounce"){
+
+        textLayer.style.animation =
+            "flixBounce 1s infinite";
+
+    }
+
+    else if(type === "spin"){
+
+        textLayer.style.animation =
+            "flixSpin 2s infinite linear";
+
+    }
+
+    else{
+
+        textLayer.style.animation = "none";
+
+    }
+
+}
+
+
+/* =====================================================
+   FILTERS MODAL
+===================================================== */
+
+function openFilters(){
+
+    openModal(
+        "🎨 Filters",
+        `
+        <div class="filter-grid">
+
+            <button onclick="setVideoFilter('none')">
+                Normal
+            </button>
+
+            <button onclick="setVideoFilter('grayscale(100%)')">
+                B&W
+            </button>
+
+            <button onclick="setVideoFilter('sepia(80%)')">
+                Sepia
+            </button>
+
+            <button onclick="setVideoFilter('contrast(140%)')">
+                Contrast
+            </button>
+
+            <button onclick="setVideoFilter('saturate(180%)')">
+                Vivid
+            </button>
+
+            <button onclick="setVideoFilter('brightness(120%)')">
+                Bright
+            </button>
+
+        </div>
+        `
+    );
+
+}
+
+
+function setVideoFilter(filter){
+
+    video.style.filter = filter;
+
+}
+
+
+/* =====================================================
+   THUMBNAIL MAKER
+===================================================== */
+
+function openThumbnailMaker(){
+
+    openModal(
+        "🖼 Thumbnail Maker",
+        `
+        <p style="color:#aaa;margin-bottom:12px">
+            Thumbnail ke liye image select karo.
+        </p>
+
+        <button
+            class="action"
+            onclick="openImagePicker()">
+            📷 Select Image
+        </button>
+
+        <div id="thumbnailPreview"
+             style="margin-top:15px">
+        </div>
+        `
+    );
+
+}
+
+
+function openImagePicker(){
+
+    imageInput.value = "";
+
+    imageInput.click();
+
+}
+
+
+imageInput.addEventListener("change", function(){
+
+    const file = this.files[0];
+
+    if(!file) return;
+
+    const url =
+        URL.createObjectURL(file);
+
+    const preview =
+        document.getElementById("thumbnailPreview");
+
+    if(preview){
+
+        preview.innerHTML =
+            `
+            <img
+                src="${url}"
+                style="
+                width:100%;
+                border-radius:10px;
+                display:block;
+                "
+            >
+            `;
+
+    }
+
+});
+
+
+/* =====================================================
+   TEXT TO SPEECH
+===================================================== */
+
+function textToSpeech(){
+
+    openModal(
+        "🔊 Text to Speech",
+        `
+        <textarea
+            id="ttsText"
+            class="modal-input"
+            rows="5"
+            placeholder="Yahan text likho..."
+        ></textarea>
+
+        <button
+            class="action"
+            onclick="speakText()">
+            🔊 Speak
+        </button>
+        `
+    );
+
+}
+
+
+function speakText(){
+
+    const text =
+        document.getElementById("ttsText").value;
+
+    if(!text.trim()){
+
+        alert("Pehle text likho.");
+        return;
+
+    }
+
+    if(!("speechSynthesis" in window)){
+
+        alert("Is browser mein Text to Speech available nahi hai.");
+        return;
+
+    }
+
+    const speech =
+        new SpeechSynthesisUtterance(text);
+
+    speechSynthesis.cancel();
+
+    speechSynthesis.speak(speech);
+
+}
+
+
+/* =====================================================
+   SPEECH TO TEXT
+===================================================== */
+
+function speechToText(){
+
+    if(!("webkitSpeechRecognition" in window) &&
+       !("SpeechRecognition" in window)){
+
+        alert(
+            "Is browser mein Speech Recognition supported nahi hai."
+        );
+
+        return;
+
+    }
+
+    const Recognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    const recognition =
+        new Recognition();
+
+    recognition.lang = "hi-IN";
+
+    recognition.continuous = false;
+
+    recognition.interimResults = false;
+
+    openModal(
+        "🗣➡📝 Speech to Text",
+        `
+        <p style="color:#aaa">
+            Bolna start karo...
+        </p>
+
+        <div
+            id="speechResult"
+            class="result">
+            Listening...
+        </div>
+        `
+    );
+
+    recognition.onresult = function(event){
+
+        const text =
+            event.results[0][0].transcript;
+
+        document.getElementById(
+            "speechResult"
+        ).textContent = text;
+
+    };
+
+    recognition.onerror = function(){
+
+        const result =
+            document.getElementById("speechResult");
+
+        if(result){
+
+            result.textContent =
+                "Speech recognition error.";
+
+        }
+
+    };
+
+    recognition.start();
+
+}
+
+
+/* =====================================================
+   EXPORT
+===================================================== */
+
+function exportVideo(){
+
+    if(!video.src){
+
+        alert("Pehle video import karo.");
+        return;
+
+    }
+
+    /*
+       Browser mein sirf edited preview ko directly
+       MP4 video ke roop mein export karna possible nahi
+       hota bina video-processing engine ke.
+
+       Isliye abhi original selected video download
+       karne ka option diya gaya hai.
+    */
+
+    const link =
+        document.createElement("a");
+
+    link.href = videoURL;
+
+    link.download =
+        "flix-video.mp4";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+}
+
+
+/* =====================================================
+   KEYBOARD SHORTCUTS
+===================================================== */
+
+document.addEventListener("keydown", function(event){
+
+    if(event.code === "Space"){
+
+        const tag =
+            document.activeElement.tagName;
+
+        if(tag !== "INPUT" &&
+           tag !== "TEXTAREA"){
+
+            event.preventDefault();
+
+            playPause();
+
+        }
+
+    }
+
+    if(event.key === "Escape"){
+
+        closeModal();
+
+    }
+
+});
+
+
+/* =====================================================
+   MODAL OUTSIDE CLICK
+===================================================== */
+
+modal.addEventListener("click", function(event){
+
+    if(event.target === modal){
+
+        closeModal();
+
+    }
+
+});
+
+
+/* =====================================================
+   ANIMATION CSS
+===================================================== */
+
+const animationStyle =
+document.creat
