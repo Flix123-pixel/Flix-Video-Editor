@@ -19,6 +19,19 @@ body{
     overflow:hidden;
 }
 
+button{
+    border:0;
+    border-radius:8px;
+    padding:9px 14px;
+    background:#20232d;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#303441;
+}
+
 .app{
     height:100vh;
     display:flex;
@@ -52,19 +65,6 @@ body{
     gap:10px;
 }
 
-button{
-    border:0;
-    border-radius:8px;
-    padding:9px 14px;
-    background:#20232d;
-    color:white;
-    cursor:pointer;
-}
-
-button:hover{
-    background:#303441;
-}
-
 .export{
     background:#6c63ff;
 }
@@ -81,19 +81,19 @@ button:hover{
     min-height:0;
 }
 
-/* LEFT PANEL */
+/* SIDEBAR */
 
 .sidebar{
     width:245px;
     background:#101218;
     border-right:1px solid #252936;
     overflow:auto;
-    padding:12px;
+    padding:10px;
 }
 
 .tool{
-    padding:13px;
-    margin-bottom:7px;
+    padding:11px;
+    margin-bottom:6px;
     border-radius:9px;
     cursor:pointer;
     background:#171a22;
@@ -105,7 +105,7 @@ button:hover{
 
 .tool b{
     display:block;
-    margin-bottom:4px;
+    margin-bottom:3px;
 }
 
 .tool small{
@@ -149,7 +149,7 @@ button:hover{
     margin-bottom:8px;
 }
 
-/* TEXT LAYER */
+/* TEXT */
 
 .text-layer{
     position:absolute;
@@ -157,8 +157,9 @@ button:hover{
     font-size:40px;
     font-weight:bold;
     text-shadow:2px 2px 8px #000;
-    pointer-events:none;
     display:none;
+    pointer-events:none;
+    z-index:10;
 }
 
 /* CONTROLS */
@@ -175,41 +176,6 @@ button:hover{
 
 .controls input[type=range]{
     flex:1;
-}
-
-/* RIGHT PANEL */
-
-.properties{
-    width:260px;
-    background:#101218;
-    border-left:1px solid #252936;
-    overflow:auto;
-    padding:14px;
-}
-
-.properties h3{
-    margin-bottom:15px;
-}
-
-.prop{
-    margin-bottom:18px;
-}
-
-.prop label{
-    display:block;
-    font-size:13px;
-    color:#aaa;
-    margin-bottom:7px;
-}
-
-.prop input,
-.prop select{
-    width:100%;
-    padding:8px;
-    border-radius:7px;
-    border:1px solid #303440;
-    background:#191c24;
-    color:white;
 }
 
 /* TIMELINE */
@@ -251,15 +217,147 @@ button:hover{
     font-weight:bold;
 }
 
+/* RIGHT PANEL */
+
+.properties{
+    width:270px;
+    background:#101218;
+    border-left:1px solid #252936;
+    overflow:auto;
+    padding:14px;
+}
+
+.properties h3{
+    margin-bottom:15px;
+}
+
+.prop{
+    margin-bottom:18px;
+}
+
+.prop label{
+    display:block;
+    font-size:13px;
+    color:#aaa;
+    margin-bottom:7px;
+}
+
+.prop input,
+.prop select,
+.prop textarea{
+    width:100%;
+    padding:8px;
+    border-radius:7px;
+    border:1px solid #303440;
+    background:#191c24;
+    color:white;
+}
+
+/* MODAL */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.78);
+    z-index:9999;
+    align-items:center;
+    justify-content:center;
+}
+
+.modal-box{
+    width:min(650px,92%);
+    max-height:85vh;
+    overflow:auto;
+    background:#151820;
+    border:1px solid #303440;
+    border-radius:18px;
+    padding:22px;
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.close{
+    font-size:20px;
+    padding:5px 11px;
+}
+
+.modal-input{
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+    background:#0f1117;
+    border:1px solid #343846;
+    color:white;
+    border-radius:9px;
+}
+
+.action{
+    width:100%;
+    margin-top:10px;
+    background:#6c63ff;
+}
+
+.tool-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+}
+
+.tool-grid button{
+    padding:13px;
+}
+
+/* AI RESULT */
+
+.result{
+    margin-top:15px;
+    padding:15px;
+    border-radius:10px;
+    background:#0d0f14;
+    color:#aaa;
+}
+
+/* FILTER BUTTONS */
+
+.filter-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+}
+
+.filter-grid button{
+    padding:12px 5px;
+}
+
+/* STICKERS */
+
+.stickers{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+}
+
+.stickers button{
+    font-size:25px;
+}
+
+/* MOBILE */
+
 @media(max-width:800px){
 
     .sidebar{
-        width:70px;
+        width:75px;
     }
 
     .tool{
-        padding:10px 5px;
         text-align:center;
+        padding:9px 4px;
     }
 
     .tool small{
@@ -267,12 +365,13 @@ button:hover{
     }
 
     .tool b{
-        font-size:11px;
+        font-size:10px;
     }
 
     .properties{
         width:190px;
     }
+
 }
 
 @media(max-width:600px){
@@ -286,8 +385,13 @@ button:hover{
     }
 
     .timeline{
-        height:150px;
+        height:145px;
     }
+
+    .logo{
+        font-size:16px;
+    }
+
 }
 </style>
 </head>
@@ -296,7 +400,7 @@ button:hover{
 
 <div class="app">
 
-<!-- TOP -->
+<!-- TOP BAR -->
 
 <header class="topbar">
 
@@ -306,13 +410,9 @@ button:hover{
 
     <div class="top-actions">
 
-        <button onclick="openVideo()">
-            📂 Import
-        </button>
+        <button onclick="openVideo()">📂 Import</button>
 
-        <button onclick="newProject()">
-            ＋ New
-        </button>
+        <button onclick="newProject()">＋ New</button>
 
         <button class="export" onclick="exportVideo()">
             ⬇ Export
@@ -322,8 +422,6 @@ button:hover{
 
 </header>
 
-
-<!-- MAIN -->
 
 <div class="main">
 
@@ -336,34 +434,164 @@ button:hover{
         <small>Video & images</small>
     </div>
 
+    <div class="tool" onclick="openFeature('AI Effect')">
+        <b>✨ AI Effect</b>
+        <small>AI effects</small>
+    </div>
+
+    <div class="tool" onclick="openFeature('Transition')">
+        <b>🎬 Transition</b>
+        <small>Clip transition</small>
+    </div>
+
+    <div class="tool" onclick="openFeature('AI Speech')">
+        <b>🗣 AI Speech</b>
+        <small>AI voice</small>
+    </div>
+
+    <div class="tool" onclick="openFeature('Voice Enhance')">
+        <b>🎙 Voice Enhance</b>
+        <small>Clean voice</small>
+    </div>
+
+    <div class="tool" onclick="openFeature('AI Enhance')">
+        <b>✨ AI Enhance</b>
+        <small>Improve video</small>
+    </div>
+
+    <div class="tool" onclick="openFeature('Auto Captions')">
+        <b>💬 Auto Captions</b>
+        <small>Generate captions</small>
+    </div>
+
+    <div class="tool" onclick="openFeature('AI Cut')">
+        <b>✂ AI Cut</b>
+        <small>Smart cutting</small>
+    </div>
+
+    <div class="tool" onclick="splitVideo()">
+        <b>✂ Split</b>
+        <small>Split clip</small>
+    </div>
+
+    <div class="tool" onclick="openFeature('Portrait Retouch')">
+        <b>👤 Portrait Retouch</b>
+        <small>Portrait tools</small>
+    </div>
+
+    <div class="tool" onclick="openFeature('Photo Remove')">
+        <b>🪄 Photo Remove</b>
+        <small>Remove object</small>
+    </div>
+
+    <div class="tool" onclick="openFeature('Precise Cutout')">
+        <b>🔲 Precise Cutout</b>
+        <small>Background cutout</small>
+    </div>
+
+    <div class="tool" onclick="openFeature('AI Light')">
+        <b>💡 AI Light</b>
+        <small>Lighting</small>
+    </div>
+
+    <div class="tool" onclick="openFeature('AI Blend')">
+        <b>🌈 AI Blend</b>
+        <small>Blend media</small>
+    </div>
+
+    <div class="tool" onclick="autoAdjust()">
+        <b>⚙ Auto Adjust</b>
+        <small>Auto color</small>
+    </div>
+
+    <div class="tool" onclick="openHSL()">
+        <b>🎨 HSL</b>
+        <small>Color controls</small>
+    </div>
+
+    <div class="tool" onclick="openTheme()">
+        <b>🎭 Theme</b>
+        <small>Video themes</small>
+    </div>
+
+    <div class="tool" onclick="openStickers()">
+        <b>⭐ Stickers</b>
+        <small>Add stickers</small>
+    </div>
+
+    <div class="tool" onclick="openAnimation()">
+        <b>🎞 Animation</b>
+        <small>Animate</small>
+    </div>
+
     <div class="tool" onclick="showText()">
         <b>🔤 Text</b>
-        <small>Add text</small>
+        <small>Write on video</small>
     </div>
 
-    <div class="tool" onclick="rotateVideo()">
-        <b>🔄 Rotate</b>
-        <small>Rotate video</small>
+    <div class="tool" onclick="openFilters()">
+        <b>🎨 Filters</b>
+        <small>Video filters</small>
     </div>
 
-    <div class="tool" onclick="flipVideo()">
-        <b>↔️ Flip</b>
-        <small>Mirror video</small>
+    <div class="tool" onclick="openThumbnailMaker()">
+        <b>🖼 Thumbnail Maker</b>
+        <small>Create thumbnail</small>
     </div>
 
-    <div class="tool" onclick="setSpeed()">
-        <b>⏩ Speed</b>
-        <small>Playback speed</small>
+    <div class="tool" onclick="openFeature('AI Photo Maker')">
+        <b>🤖 AI Photo Maker</b>
+        <small>AI image</small>
     </div>
 
-    <div class="tool" onclick="muteVideo()">
-        <b>🔇 Audio</b>
-        <small>Mute / unmute</small>
+    <div class="tool" onclick="openFeature('AI Video Maker')">
+        <b>🎥 AI Video Maker</b>
+        <small>AI video</small>
     </div>
 
-    <div class="tool" onclick="resetVideo()">
-        <b>♻️ Reset</b>
-        <small>Reset effects</small>
+    <div class="tool" onclick="textToSpeech()">
+        <b>🔊 Text to Speech</b>
+        <small>Speak text</small>
+    </div>
+
+    <div class="tool" onclick="openFeature('Sound Effects')">
+        <b>🔉 Sound Effects</b>
+        <small>Audio effects</small>
+    </div>
+
+    <div class="tool" onclick="openFeature('Image to Video')">
+        <b>🖼➡🎥 Image to Video</b>
+        <small>Animate image</small>
+    </div>
+
+    <div class="tool" onclick="openFeature('Text to Video')">
+        <b>📝➡🎥 Text to Video</b>
+        <small>Generate video</small>
+    </div>
+
+    <div class="tool" onclick="openFeature('Voice Changer')">
+        <b>🎙 Voice Changer</b>
+        <small>Change voice</small>
+    </div>
+
+    <div class="tool" onclick="openFeature('Music')">
+        <b>🎵 Music</b>
+        <small>Add music</small>
+    </div>
+
+    <div class="tool" onclick="speechToText()">
+        <b>🗣➡📝 Speech to Text</b>
+        <small>Voice typing</small>
+    </div>
+
+    <div class="tool" onclick="openFeature('Dubbing')">
+        <b>🌍 Dubbing</b>
+        <small>Dub video</small>
+    </div>
+
+    <div class="tool" onclick="openFeature('Text to Music')">
+        <b>📝➡🎵 Text to Music</b>
+        <small>AI music</small>
     </div>
 
 </aside>
@@ -389,25 +617,16 @@ button:hover{
             style="display:none">
         </video>
 
-        <div
-            id="textLayer"
-            class="text-layer">
-        </div>
+        <div id="textLayer" class="text-layer"></div>
 
     </div>
 
 
-    <!-- VIDEO CONTROLS -->
-
     <div class="controls">
 
-        <button onclick="playPause()">
-            ▶
-        </button>
+        <button onclick="playPause()">▶</button>
 
-        <span id="time">
-            00:00 / 00:00
-        </span>
+        <span id="time">00:00 / 00:00</span>
 
         <input
             id="seek"
@@ -417,14 +636,10 @@ button:hover{
             value="0"
             oninput="seekVideo(this.value)">
 
-        <button onclick="toggleMute()">
-            🔊
-        </button>
+        <button onclick="toggleMute()">🔊</button>
 
     </div>
 
-
-    <!-- TIMELINE -->
 
     <div class="timeline">
 
@@ -432,20 +647,14 @@ button:hover{
 
             <span>Timeline</span>
 
-            <span id="duration">
-                00:00
-            </span>
+            <span id="duration">00:00</span>
 
         </div>
 
         <div class="track">
 
-            <div
-                class="clip"
-                id="clip">
-
+            <div class="clip" id="clip">
                 🎬 Video Clip
-
             </div>
 
         </div>
@@ -461,7 +670,6 @@ button:hover{
 
     <h3>Properties</h3>
 
-
     <div class="prop">
 
         <label>Brightness</label>
@@ -475,7 +683,6 @@ button:hover{
             oninput="filters()">
 
     </div>
-
 
     <div class="prop">
 
@@ -491,7 +698,6 @@ button:hover{
 
     </div>
 
-
     <div class="prop">
 
         <label>Saturation</label>
@@ -506,7 +712,6 @@ button:hover{
 
     </div>
 
-
     <div class="prop">
 
         <label>Blur</label>
@@ -520,7 +725,6 @@ button:hover{
             oninput="filters()">
 
     </div>
-
 
     <div class="prop">
 
@@ -537,7 +741,6 @@ button:hover{
 
     </div>
 
-
     <div class="prop">
 
         <label>Volume</label>
@@ -551,7 +754,6 @@ button:hover{
             oninput="setVolume(this.value)">
 
     </div>
-
 
     <div class="prop">
 
@@ -568,9 +770,10 @@ button:hover{
 </aside>
 
 </div>
-
 </div>
 
+
+<!-- HIDDEN FILE INPUTS -->
 
 <input
     id="fileInput"
@@ -578,25 +781,79 @@ button:hover{
     accept="video/*"
     hidden>
 
+<input
+    id="imageInput"
+    type="file"
+    accept="image/*"
+    hidden>
+
+
+<!-- FEATURE MODAL -->
+
+<div class="modal" id="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <h2 id="modalTitle">
+                Flix Tool
+            </h2>
+
+            <button
+                class="close"
+                onclick="closeModal()">
+                ×
+            </button>
+
+        </div>
+
+        <div id="modalContent"></div>
+
+    </div>
+
+</div>
+
 
 <script>
 
-const video = document.getElementById("video");
-const fileInput = document.getElementById("fileInput");
-const empty = document.getElementById("empty");
-const seek = document.getElementById("seek");
-const time = document.getElementById("time");
-const duration = document.getElementById("duration");
-const textLayer = document.getElementById("textLayer");
+const video =
+    document.getElementById("video");
+
+const fileInput =
+    document.getElementById("fileInput");
+
+const empty =
+    document.getElementById("empty");
+
+const seek =
+    document.getElementById("seek");
+
+const time =
+    document.getElementById("time");
+
+const duration =
+    document.getElementById("duration");
+
+const textLayer =
+    document.getElementById("textLayer");
+
+const modal =
+    document.getElementById("modal");
+
+const modalTitle =
+    document.getElementById("modalTitle");
+
+const modalContent =
+    document.getElementById("modalContent");
 
 let videoURL = null;
-
 let rotation = 0;
 let flipped = false;
 
 
 /* =========================
-   IMPORT VIDEO
+   IMPORT
 ========================= */
 
 function openVideo(){
@@ -605,8 +862,7 @@ function openVideo(){
 
 }
 
-
-fileInput.addEventListener("change", function(){
+fileInput.addEventListener("change",function(){
 
     const file = this.files[0];
 
@@ -618,7 +874,8 @@ fileInput.addEventListener("change", function(){
 
     }
 
-    videoURL = URL.createObjectURL(file);
+    videoURL =
+        URL.createObjectURL(file);
 
     video.src = videoURL;
 
@@ -632,7 +889,7 @@ fileInput.addEventListener("change", function(){
 
 
 /* =========================
-   PLAY / PAUSE
+   PLAY
 ========================= */
 
 function playPause(){
@@ -664,39 +921,48 @@ function playPause(){
 
 function formatTime(seconds){
 
-    if(!isFinite(seconds)) return "00:00";
+    if(!isFinite(seconds))
+        return "00:00";
 
-    let m = Math.floor(seconds / 60);
+    let m =
+        Math.floor(seconds/60);
 
-    let s = Math.floor(seconds % 60);
+    let s =
+        Math.floor(seconds%60);
 
-    return String(m).padStart(2,"0") + ":" +
-           String(s).padStart(2,"0");
+    return String(m).padStart(2,"0")
+        + ":" +
+        String(s).padStart(2,"0");
 
 }
 
+video.addEventListener(
+    "loadedmetadata",
+    function(){
 
-video.addEventListener("loadedmetadata",function(){
+        duration.textContent =
+            formatTime(video.duration);
 
-    duration.textContent =
-        formatTime(video.duration);
+    }
+);
 
-});
+video.addEventListener(
+    "timeupdate",
+    function(){
 
+        if(!video.duration) return;
 
-video.addEventListener("timeupdate",function(){
+        seek.value =
+            (video.currentTime /
+            video.duration) * 100;
 
-    if(!video.duration) return;
+        time.textContent =
+            formatTime(video.currentTime)
+            + " / " +
+            formatTime(video.duration);
 
-    seek.value =
-        (video.currentTime / video.duration) * 100;
-
-    time.textContent =
-        formatTime(video.currentTime) +
-        " / " +
-        formatTime(video.duration);
-
-});
+    }
+);
 
 
 function seekVideo(value){
@@ -704,21 +970,22 @@ function seekVideo(value){
     if(!video.duration) return;
 
     video.currentTime =
-        video.duration * (value / 100);
+        video.duration *
+        (value/100);
 
 }
 
 
 /* =========================
-   MUTE
+   AUDIO
 ========================= */
 
 function toggleMute(){
 
-    video.muted = !video.muted;
+    video.muted =
+        !video.muted;
 
 }
-
 
 function muteVideo(){
 
@@ -726,10 +993,10 @@ function muteVideo(){
 
 }
 
-
 function setVolume(value){
 
-    video.volume = value / 100;
+    video.volume =
+        value/100;
 
 }
 
@@ -742,18 +1009,18 @@ function setSpeed(){
 
     let speed =
         prompt(
-            "Enter speed:\n0.25, 0.5, 1, 1.5, 2"
+            "Speed: 0.25, 0.5, 1, 1.5, 2"
         );
 
     speed = Number(speed);
 
     if(
-        speed &&
-        speed >= 0.25 &&
+        speed >= .25 &&
         speed <= 2
     ){
 
-        video.playbackRate = speed;
+        video.playbackRate =
+            speed;
 
     }
 
@@ -768,30 +1035,28 @@ function rotateVideo(){
 
     rotation += 90;
 
-    if(rotation >= 360){
-
+    if(rotation >= 360)
         rotation = 0;
-
-    }
 
     applyTransform();
 
 }
-
 
 function flipVideo(){
 
-    flipped = !flipped;
+    flipped =
+        !flipped;
 
     applyTransform();
 
 }
-
 
 function applyTransform(){
 
     let flip =
-        flipped ? "scaleX(-1)" : "";
+        flipped ?
+        "scaleX(-1)" :
+        "";
 
     video.style.transform =
         "rotate(" +
@@ -809,41 +1074,132 @@ function applyTransform(){
 function filters(){
 
     let b =
-        document.getElementById("brightness").value;
+        document.getElementById(
+            "brightness"
+        ).value;
 
     let c =
-        document.getElementById("contrast").value;
+        document.getElementById(
+            "contrast"
+        ).value;
 
     let s =
-        document.getElementById("saturation").value;
+        document.getElementById(
+            "saturation"
+        ).value;
 
     let blur =
-        document.getElementById("blur").value;
+        document.getElementById(
+            "blur"
+        ).value;
 
     video.style.filter =
-        "brightness(" + b + "%) " +
-        "contrast(" + c + "%) " +
-        "saturate(" + s + "%) " +
-        "blur(" + blur + "px)";
+        "brightness("+b+"%) "+
+        "contrast("+c+"%) "+
+        "saturate("+s+"%) "+
+        "blur("+blur+"px)";
 
 }
 
 
 /* =========================
-   ASPECT RATIO
+   AUTO ADJUST
+========================= */
+
+function autoAdjust(){
+
+    document.getElementById(
+        "brightness"
+    ).value = 108;
+
+    document.getElementById(
+        "contrast"
+    ).value = 110;
+
+    document.getElementById(
+        "saturation"
+    ).value = 110;
+
+    filters();
+
+}
+
+
+/* =========================
+   HSL
+========================= */
+
+function openHSL(){
+
+    openModal(
+        "🎨 HSL",
+        `
+        <div class="prop">
+            <label>Hue</label>
+            <input
+                id="hue"
+                type="range"
+                min="-180"
+                max="180"
+                value="0"
+                oninput="applyHSL()">
+        </div>
+
+        <div class="prop">
+            <label>Saturation</label>
+            <input
+                id="hslSat"
+                type="range"
+                min="0"
+                max="200"
+                value="100"
+                oninput="applyHSL()">
+        </div>
+
+        <div class="prop">
+            <label>Lightness</label>
+            <input
+                id="lightness"
+                type="range"
+                min="50"
+                max="150"
+                value="100"
+                oninput="applyHSL()">
+        </div>
+        `
+    );
+
+}
+
+function applyHSL(){
+
+    let h =
+        document.getElementById("hue").value;
+
+    let s =
+        document.getElementById("hslSat").value;
+
+    let l =
+        document.getElementById("lightness").value;
+
+    video.style.filter =
+        "hue-rotate("+h+"deg) "+
+        "saturate("+s+"%) "+
+        "brightness("+l+"%)";
+
+}
+
+
+/* =========================
+   ASPECT
 ========================= */
 
 function aspect(value){
 
-    if(value === "auto"){
-
-        video.style.aspectRatio = "auto";
-
-        return;
-
-    }
-
-    video.style.aspectRatio = value;
+    video.style.aspectRatio =
+        value === "auto" ?
+        "auto" :
+        value;
 
 }
 
@@ -855,194 +1211,31 @@ function aspect(value){
 function showText(){
 
     let text =
-        prompt("Enter your text:");
+        prompt("Enter text:");
 
     if(!text) return;
 
-    textLayer.textContent = text;
+    textLayer.textContent =
+        text;
 
-    textLayer.style.display = "block";
+    textLayer.style.display =
+        "block";
 
-    document.getElementById("textInput").value = text;
+    document.getElementById(
+        "textInput"
+    ).value = text;
 
 }
-
 
 function updateText(){
 
+    let value =
+        document.getElementById(
+            "textInput"
+        ).value;
+
     textLayer.textContent =
-        document.getElementById("textInput").value;
+        value;
 
-    if(textLayer.textContent){
-
-        textLayer.style.display = "block";
-
-    }else{
-
-        textLayer.style.display = "none";
-
-    }
-
-}
-
-
-/* =========================
-   RESET
-========================= */
-
-function resetVideo(){
-
-    rotation = 0;
-
-    flipped = false;
-
-    video.style.transform = "";
-
-    video.style.filter = "";
-
-    video.style.aspectRatio = "auto";
-
-    video.playbackRate = 1;
-
-    video.volume = 1;
-
-    video.muted = false;
-
-    document.getElementById("brightness").value = 100;
-
-    document.getElementById("contrast").value = 100;
-
-    document.getElementById("saturation").value = 100;
-
-    document.getElementById("blur").value = 0;
-
-}
-
-
-/* =========================
-   NEW PROJECT
-========================= */
-
-function newProject(){
-
-    if(confirm("Start a new project?")){
-
-        video.pause();
-
-        video.removeAttribute("src");
-
-        video.load();
-
-        video.style.display = "none";
-
-        empty.style.display = "block";
-
-        textLayer.style.display = "none";
-
-        fileInput.value = "";
-
-    }
-
-}
-
-
-/* =========================
-   EXPORT
-========================= */
-
-async function exportVideo(){
-
-    if(!video.src){
-
-        alert("Import a video first.");
-
-        return;
-
-    }
-
-    alert(
-        "Browser export is starting.\n\n" +
-        "For advanced MP4 export, FFmpeg integration can be added."
-    );
-
-    try{
-
-        const stream =
-            video.captureStream();
-
-        const recorder =
-            new MediaRecorder(
-                stream,
-                {
-                    mimeType:
-                    "video/webm"
-                }
-            );
-
-        let chunks = [];
-
-        recorder.ondataavailable = e => {
-
-            if(e.data.size > 0){
-
-                chunks.push(e.data);
-
-            }
-
-        };
-
-        recorder.onstop = () => {
-
-            const blob =
-                new Blob(
-                    chunks,
-                    {type:"video/webm"}
-                );
-
-            const url =
-                URL.createObjectURL(blob);
-
-            const a =
-                document.createElement("a");
-
-            a.href = url;
-
-            a.download =
-                "flix-video.webm";
-
-            a.click();
-
-            URL.revokeObjectURL(url);
-
-        };
-
-
-        video.currentTime = 0;
-
-        recorder.start();
-
-        video.play();
-
-
-        video.onended = () => {
-
-            recorder.stop();
-
-        };
-
-    }catch(error){
-
-        console.error(error);
-
-        alert(
-            "Export is not supported by this browser."
-        );
-
-    }
-
-}
-
-</script>
-
-</body>
-  </html>
+    textLayer.style.display =
+       
