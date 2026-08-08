@@ -1,37 +1,31 @@
-/* =========================================
+/* =========================================================
    FLIX VIDEO EDITOR
-   CONFIGURATION FILE
-   ========================================= */
+   CONFIGURATION
+   ========================================================= */
 
 const FLIX_CONFIG = {
 
-    /* ==============================
-       APP INFORMATION
-    ============================== */
-
     app: {
         name: "Flix Video Editor",
-        version: "3.0.0",
+        version: "4.0.0",
         developer: "Flix",
         theme: "dark"
     },
 
-
-    /* ==============================
-       VIDEO SETTINGS
-    ============================== */
-
     video: {
-
         supportedFormats: [
             "video/mp4",
             "video/webm",
             "video/ogg",
-            "video/mov"
+            "video/quicktime",
+            "video/x-m4v",
+            "video/avi",
+            "video/x-msvideo",
+            "video/mkv",
+            "video/x-matroska"
         ],
 
         defaultVolume: 1,
-
         defaultSpeed: 1,
 
         speeds: [
@@ -44,16 +38,9 @@ const FLIX_CONFIG = {
             1.75,
             2
         ]
-
     },
 
-
-    /* ==============================
-       IMAGE SETTINGS
-    ============================== */
-
     image: {
-
         supportedFormats: [
             "image/png",
             "image/jpeg",
@@ -62,16 +49,9 @@ const FLIX_CONFIG = {
         ],
 
         maximumSizeMB: 50
-
     },
 
-
-    /* ==============================
-       AUDIO SETTINGS
-    ============================== */
-
     audio: {
-
         supportedFormats: [
             "audio/mp3",
             "audio/wav",
@@ -80,17 +60,9 @@ const FLIX_CONFIG = {
         ],
 
         defaultVolume: 1,
-
         fadeIn: true,
-
         fadeOut: true
-
     },
-
-
-    /* ==============================
-       ASPECT RATIOS
-    ============================== */
 
     aspectRatios: {
 
@@ -103,21 +75,14 @@ const FLIX_CONFIG = {
         square: "1 / 1",
 
         cinematic: "21 / 9"
-
     },
-
-
-    /* ==============================
-       EXPORT SETTINGS
-    ============================== */
 
     export: {
 
         defaultFormat: "webm",
 
         formats: [
-            "webm",
-            "mp4"
+            "webm"
         ],
 
         resolutions: [
@@ -136,13 +101,7 @@ const FLIX_CONFIG = {
         defaultResolution: "720p",
 
         defaultFPS: 30
-
     },
-
-
-    /* ==============================
-       EDITING FEATURES
-    ============================== */
 
     features: {
 
@@ -186,14 +145,40 @@ const FLIX_CONFIG = {
 
         zoom: true,
 
-        timelineZoom: true
+        timelineZoom: true,
 
+        hsl: true,
+
+        stickers: true,
+
+        autoCaptions: true,
+
+        aiEffect: true,
+
+        aiEnhance: true,
+
+        aiSpeech: true,
+
+        voiceEnhance: true,
+
+        thumbnailMaker: true,
+
+        aiPhotoMaker: true,
+
+        aiVideoMaker: true,
+
+        textToSpeech: true,
+
+        speechToText: true,
+
+        soundEffects: true,
+
+        music: true,
+
+        dubbing: true,
+
+        textToMusic: true
     },
-
-
-    /* ==============================
-       FILTER SETTINGS
-    ============================== */
 
     filters: {
 
@@ -220,13 +205,7 @@ const FLIX_CONFIG = {
             max: 20,
             default: 0
         }
-
     },
-
-
-    /* ==============================
-       TEXT SETTINGS
-    ============================== */
 
     text: {
 
@@ -245,13 +224,7 @@ const FLIX_CONFIG = {
         shadow: true,
 
         outline: true
-
     },
-
-
-    /* ==============================
-       TIMELINE SETTINGS
-    ============================== */
 
     timeline: {
 
@@ -262,23 +235,12 @@ const FLIX_CONFIG = {
         defaultZoom: 100,
 
         tracks: [
-
             "video",
-
             "overlay",
-
             "text",
-
             "audio"
-
         ]
-
     },
-
-
-    /* ==============================
-       TRANSITIONS
-    ============================== */
 
     transitions: [
 
@@ -311,26 +273,14 @@ const FLIX_CONFIG = {
             id: "zoom",
             duration: 500
         }
-
     ],
-
-
-    /* ==============================
-       AUTOSAVE
-    ============================== */
 
     autosave: {
 
         enabled: true,
 
         interval: 10000
-
     },
-
-
-    /* ==============================
-       LIMITS
-    ============================== */
 
     limits: {
 
@@ -343,14 +293,23 @@ const FLIX_CONFIG = {
         maximumAudioSizeMB: 200,
 
         maximumVideoSizeMB: 1000
-
     }
 
 };
 
 
-/* =========================================
+/* =========================================================
    MAKE CONFIG AVAILABLE
-   ========================================= */
+   ========================================================= */
 
-window.FLIX_CONFIG = FLIX_CONFIG;
+window.FLIX_CONFIG =
+    FLIX_CONFIG;
+
+
+/* =========================================================
+   CONFIRM CONFIG LOADED
+   ========================================================= */
+
+console.log(
+    "✅ Flix Config loaded successfully."
+);
